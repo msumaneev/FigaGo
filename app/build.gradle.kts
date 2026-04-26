@@ -1,3 +1,6 @@
+import java.util.Properties
+import java.io.FileInputStream
+
 // Модуль :app — Android-приложение FigaGo
 // GPS-трекинг, Jetpack Compose, Room, Hilt, Google Maps
 plugins {
@@ -17,13 +20,29 @@ android {
         applicationId = "com.figago"
         minSdk = 26
         targetSdk = 35
-        versionCode = 13
-        versionName = "1.4.0"
+        versionCode = 14
+        versionName = "1.4.1"
+    }
+
+    val keystorePropertiesFile = rootProject.file("local.properties")
+    val keystoreProperties = Properties()
+    if (keystorePropertiesFile.exists()) {
+        keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+    }
+
+    signingConfigs {
+        create("release") {
+            storeFile = file(keystoreProperties["STORE_FILE"] as String? ?: "figago_keystore.jks")
+            storePassword = keystoreProperties["STORE_PASSWORD"] as String? ?: "figago123"
+            keyAlias = keystoreProperties["KEY_ALIAS"] as String? ?: "figago_key"
+            keyPassword = keystoreProperties["KEY_PASSWORD"] as String? ?: "figago123"
+        }
     }
 
     buildTypes {
         release {
             isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
