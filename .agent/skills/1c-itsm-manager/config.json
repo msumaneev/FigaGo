@@ -1,0 +1,6 @@
+{
+  "ITSM_WSDL_URL": "http://wsitsm.contlog.local:8082/wsitsm/ws/wsitsm.1cws?wsdl",
+  "ITSM_USER": "wsITSM",
+  "ITSM_PASSWORD": "kNBO1WZc019uvp86",
+  "DEV_UUID": "9c115783-db3a-11db-8458-000e7ff21b7c"
+}

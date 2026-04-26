@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Shortcuts / Deep Links для голосового управления через Google Assistant Routines.
+
+    Определяет 4 shortcut-а, каждый привязан к deep link URI:
+    - start_track      → «Я поехал» (начало дня + запись)
+    - stop_track       → «Я остановился» (стоп записи)
+    - led_event        → «Лампочка» (погасить индикатор)
+    - announce_status  → «Какой пробег» (TTS-озвучка)
+-->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- «Я поехал» — старт записи (с автоматическим началом дня) -->
+    <shortcut
+        android:shortcutId="start_track"
+        android:shortcutShortLabel="@string/shortcut_start_track"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_media_play">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.figago"
+            android:targetClass="com.figago.ui.MainActivity"
+            android:data="figago://command/start_track" />
+    </shortcut>
+
+    <!-- «Я остановился» — стоп записи -->
+    <shortcut
+        android:shortcutId="stop_track"
+        android:shortcutShortLabel="@string/shortcut_stop_track"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_media_pause">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.figago"
+            android:targetClass="com.figago.ui.MainActivity"
+            android:data="figago://command/stop_track" />
+    </shortcut>
+
+    <!-- «Лампочка» — погасить один индикатор -->
+    <shortcut
+        android:shortcutId="led_event"
+        android:shortcutShortLabel="@string/btn_led_event"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_dialog_alert">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.figago"
+            android:targetClass="com.figago.ui.MainActivity"
+            android:data="figago://command/led_event" />
+    </shortcut>
+
+    <!-- «Какой пробег» — TTS-озвучка статуса -->
+    <shortcut
+        android:shortcutId="announce_status"
+        android:shortcutShortLabel="@string/shortcut_announce_status"
+        android:enabled="true"
+        android:icon="@android:drawable/ic_btn_speak_now">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.figago"
+            android:targetClass="com.figago.ui.MainActivity"
+            android:data="figago://command/announce_status" />
+    </shortcut>
+
+</shortcuts>

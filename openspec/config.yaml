@@ -1,0 +1,18 @@
+schema: spec-driven
+
+context: |
+  Project: FigaGo — Android GPS-tracking application
+  Tech stack: Kotlin, Jetpack Compose, Room DB, Google Maps SDK, Google Assistant
+  Architecture: MVVM + Clean Architecture
+  Platform: Android (min SDK 26)
+  Domain: GPS-трекинг, навигация, голосовое управление
+  Language: Русский (документация и комментарии)
+  IDE: Antigravity (AI-агент)
+
+rules:
+  proposal:
+    - Описание на русском языке
+    - Всегда указывать затрагиваемые компоненты архитектуры
+  tasks:
+    - Разбивать задачи на блоки не более 2 часов
+    - Указывать зависимости между задачами

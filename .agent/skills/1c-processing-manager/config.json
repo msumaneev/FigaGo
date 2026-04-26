@@ -1,0 +1,9 @@
+{
+    "1c_prod_url": "http://krsWsUt.contlog.local/web/hs/web/data",
+    "1c_auth_token": "Basic YXV0bzo4ODg=",
+    "query_api_key": "9c115783-db3a-11db-8458-000e7ff21b7c",
+    "workspace_dir": ".",
+    "itsm_wsdl_url": "http://wsitsm.contlog.local:8082/wsitsm/ws/wsitsm.1cws?wsdl",
+    "itsm_user": "wsITSM",
+    "itsm_password": "kNBO1WZc019uvp86"
+}

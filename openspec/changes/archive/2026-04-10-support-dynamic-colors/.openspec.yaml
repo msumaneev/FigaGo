@@ -1,0 +1,4 @@
+version: 1.0.0
+name: support-dynamic-colors
+description: Implement Material You dynamic colors and replace hardcoded UI colors with semantic tokens.
+schema: change
