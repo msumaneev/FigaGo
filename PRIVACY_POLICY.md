@@ -2,52 +2,41 @@
 
 **Effective Date:** April 26, 2026
 
-Welcome to **FigaGo** (the "App"), a family GPS-tracking application. This Privacy Policy explains how we collect, use, and protect your information when you use our services. By using the App, you agree to the collection and use of information in accordance with this policy.
+Welcome to **FigaGo** (the "App"). We are committed to protecting your privacy. This Privacy Policy explains how we collect and use information when you use our specialized GPS tracking and battery analytics application for electric wheelchairs.
 
 ## 1. Information We Collect
 
 ### 1.1. Location Data (Including Background Location)
-To provide the core functionality of our family tracking service (e.g., showing the real-time location of family members on a map, providing arrival/departure notifications), the App collects precise location data from your device. 
-**Important:** We collect location data even when the App is closed or not in use (background location). This is strictly necessary to ensure that family members can be located in real-time, which is the primary purpose of the App.
+The primary purpose of the App is to act as a highly accurate odometer and route tracker for your electric wheelchair, calculating distance traveled to provide predictive battery analytics. 
+To achieve this, the App collects precise location data from your device. **Important:** We collect location data in the background (even when the App is closed or not actively on screen). This background tracking is strictly necessary to accurately record your continuous trip distance and prevent gaps in the route, which directly powers the battery mileage prediction feature.
 
-### 1.2. Personal Information
-We may collect personal information such as your name, email address, and profile picture when you create an account.
-
-### 1.3. Device Information
-We collect information about the device you use to access the App, including the hardware model, operating system version, unique device identifiers, and mobile network information. This helps us optimize the App's performance and battery usage.
+### 1.2. Usage and Battery Analytics
+We collect data regarding your travel distance relative to the battery indicator levels you input. This data is kept locally on your device to personalize and improve the predictive algorithm.
 
 ## 2. How We Use Your Information
 
-We use the collected information for the following purposes:
-- **To provide and maintain the Service:** Specifically, to share your location with the family members you explicitly invite and authorize.
-- **To improve the Service:** Analyzing how the App is used to enhance battery efficiency and accuracy.
-- **To communicate with you:** Sending important service updates, security alerts, and support messages.
+- **To provide the Service:** The background location data is used exclusively to track your personal routes, calculate distances, and run the adaptive mileage prediction algorithm.
+- **Local Processing:** All location tracking, routing, and battery analytics are processed locally on your device. We do not transmit your live location to external servers or third parties.
 
 ## 3. Data Sharing and Disclosure
 
-We do **not** sell, rent, or trade your personal or location data to third parties. We only share your information in the following cases:
-- **With Authorized Users:** Your real-time location is shared only with the family members in your private group.
-- **For Legal Reasons:** If required by law, regulation, or legal process.
+We do **not** sell, rent, trade, or share your personal or location data with any third parties. Your location history remains strictly private and is stored locally within the App on your device.
 
 ## 4. Data Security
 
-We implement industry-standard security measures, including encryption in transit and at rest, to protect your personal and location data from unauthorized access, alteration, disclosure, or destruction.
+We implement appropriate security measures to protect the local data stored on your device. However, you are responsible for maintaining the physical and digital security of your device (e.g., screen locks, encryption).
 
 ## 5. Your Rights and Choices
 
-- **Location Permissions:** You can revoke the App's access to your location at any time through your device's operating system settings. However, doing so will prevent the App from functioning as intended.
-- **Account Deletion:** You can request the deletion of your account and all associated data at any time through the App's settings or by contacting us.
+- **Location Permissions:** You can revoke the App's access to background location at any time through your device settings. Please note that without background location access, the App will not be able to accurately track your trips or provide predictive battery analytics.
+- **Data Deletion:** You can delete all your tracked routes and battery history simply by clearing the App's data in your device settings or uninstalling the App.
 
-## 6. Children's Privacy
+## 6. Changes to This Privacy Policy
 
-The App is designed for family use, which may include tracking the location of children. Parents or legal guardians must create accounts and provide explicit consent for the collection of their children's location data. We do not knowingly collect personal information from children without verified parental consent.
+We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Effective Date" at the top of this document.
 
-## 7. Changes to This Privacy Policy
+## 7. Contact Us
 
-We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "Effective Date" at the top.
-
-## 8. Contact Us
-
-If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us at:
+If you have any questions or suggestions about our Privacy Policy, please contact us at:
 **Email:** support@figago.com
-*(Note: Please update with actual support email)*
+*(Note: Replace with your actual contact email before publication)*
