@@ -34,10 +34,7 @@ fun getRequiredPermissions(): List<String> {
         permissions.add(Manifest.permission.POST_NOTIFICATIONS)
     }
 
-    // Android 10+ — распознавание активности (транспорт)
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        permissions.add(Manifest.permission.ACTIVITY_RECOGNITION)
-    }
+
 
     return permissions
 }

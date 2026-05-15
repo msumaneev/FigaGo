@@ -211,8 +211,9 @@ private fun SessionCard(
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
+            val finalIconId = if (iconId != null && iconId != 0) iconId else R.drawable.ic_notification_preview
             androidx.compose.foundation.Image(
-                painter = painterResource(id = iconId ?: R.drawable.ic_notification_preview),
+                painter = painterResource(id = finalIconId),
                 contentDescription = null,
                 colorFilter = androidx.compose.ui.graphics.ColorFilter.tint(androidx.compose.material3.MaterialTheme.colorScheme.onSurfaceVariant),
                 contentScale = androidx.compose.ui.layout.ContentScale.Fit,

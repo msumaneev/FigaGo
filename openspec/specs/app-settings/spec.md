@@ -22,3 +22,16 @@
 ### Requirement: Settings Screen Includes Profile Passport
 Экран настроек SHALL включать паспорт текущей коляски первой секцией.
 Подробная спецификация: [unified-settings-dashboard/spec.md](../unified-settings-dashboard/spec.md)
+### Requirement: Reset Lamp Distances Button
+Система SHALL предоставлять кнопку для быстрого пересчета дистанций для каждой лампочки на основе профиля весов и общего пробега.
+
+#### Scenario: Recalculating 10 lamps distance
+- **WHEN** пользователь изменяет общий пробег на 40 км и нажимает кнопку пересчета
+- **THEN** дистанции 10 лампочек автоматически пересчитываются по формулам профиля весов и сохраняются
+
+### Requirement: Localize Developer Contact
+Пункт меню "Обратиться к разработчику" SHALL быть локализован на все поддерживаемые языки.
+
+#### Scenario: User opens settings
+- **WHEN** пользователь просматривает меню настроек
+- **THEN** пункт обращения к разработчику отображается на выбранном языке

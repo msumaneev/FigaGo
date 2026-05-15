@@ -60,10 +60,12 @@ interface SettingsRepository {
     suspend fun setTtsAnnounceMode(mode: String)
 
     /** Интервал оповещений по расстоянию (км). */
+    fun observeTtsDistanceIntervalKm(): Flow<Double>
     suspend fun getTtsDistanceIntervalKm(): Double
     suspend fun setTtsDistanceIntervalKm(km: Double)
 
     /** Интервал оповещений по времени (мин). */
+    fun observeTtsTimeIntervalMin(): Flow<Int>
     suspend fun getTtsTimeIntervalMin(): Int
     suspend fun setTtsTimeIntervalMin(minutes: Int)
 

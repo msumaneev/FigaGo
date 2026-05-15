@@ -20,8 +20,8 @@ android {
         applicationId = "com.figago"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.4.1"
+        versionCode = 33
+        versionName = "1.4.20"
     }
 
     val keystorePropertiesFile = rootProject.file("local.properties")
@@ -41,7 +41,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

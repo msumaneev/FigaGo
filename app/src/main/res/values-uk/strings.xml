@@ -11,6 +11,8 @@
   <string name="dashboard_finish">Стоп/Фініш</string>
   <string name="dashboard_resume">Відновити</string>
   <string name="carousel_add">Додати</string>
+  <string name="dashboard_manual_transport_start">Їду в транспорті</string>
+  <string name="dashboard_manual_transport_stop">Покинути транспорт</string>
   <string name="dashboard_mileage">Пробіг</string>
   <string name="dashboard_time_elapsed">Час у дорозі</string>
   <string name="dashboard_avg_speed">Сер. швидк.</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- Телеметрія -->
-  <string name="settings_contact_developer">Зв\'язатися з розробником</string>
-  <string name="telemetry_dialog_title">Експорт даних</string>
-  <string name="telemetry_dialog_subtitle">Оберіть, які дані відправити розробнику для діагностики</string>
-  <string name="telemetry_cat_device">Пристрій</string>
-  <string name="telemetry_cat_device_desc">Модель, версія Android, версія додатку</string>
-  <string name="telemetry_cat_settings">Налаштування</string>
-  <string name="telemetry_cat_settings_desc">Профіль візка, TTS, GPS, одиниці</string>
-  <string name="telemetry_cat_battery">Батарея</string>
-  <string name="telemetry_cat_battery_desc">LED-події та статистика лампочок</string>
-  <string name="telemetry_cat_trips">Історія поїздок</string>
-  <string name="telemetry_cat_trips_desc">Сесії та відрізки (30 днів)</string>
-  <string name="telemetry_cat_errors">Журнал помилок</string>
-  <string name="telemetry_cat_errors_desc">Винятки та аварійні ситуації</string>
-  <string name="telemetry_cat_gps">GPS-координати</string>
-  <string name="telemetry_cat_gps_desc">Маршрути (може зайняти багато місця)</string>
-  <string name="telemetry_btn_send">Відправити</string>
-  <string name="lamp_number_title">Лампочка %d</string>
-  <string name="lamp_stat_fact">Факт: ≈ %.1f км</string>
+  <string name="settings_delete_profile">Видалити профіль</string>
+  <string name="settings_auto_transport_title">Визначати поїздку в транспорті</string>
+  <string name="settings_auto_transport_desc">Автоматично призупиняти розрахунок заряду батареї при перевищенні максимальної швидкості візка.</string>
+  <string name="settings_voice_vibrate">Вібрація при команді</string>
+  <string name="settings_voice_sound">Звуковий сигнал</string>
+  <string name="settings_contact_developer">Звернутися до розробника</string>
+  <string name="lamp_number_title">Індикатор %d</string>
+  <string name="lamp_stat_fact">Факт: ≈ %.1f</string>
   <string name="lamp_stat_no_data">Немає даних</string>
   <string name="dashboard_stat_warning">⚠ Статистика сильно відрізняється від встановлених значень. Натисніть для налаштування.</string>
 </resources>

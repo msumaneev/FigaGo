@@ -38,5 +38,4 @@ We may update our Privacy Policy from time to time. We will notify you of any ch
 ## 7. Contact Us
 
 If you have any questions or suggestions about our Privacy Policy, please contact us at:
-**Email:** support@figago.com
-*(Note: Replace with your actual contact email before publication)*
+**Email:** sumaneev@gmail.com

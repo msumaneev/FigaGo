@@ -24,7 +24,7 @@ data class PreflightStatus(
     val hasActivityRecognition: Boolean,
 ) {
     val isAllClear: Boolean
-        get() = isGpsEnabled && hasBackgroundLocation && isIgnoringBatteryOptimizations && hasActivityRecognition
+        get() = isGpsEnabled && isIgnoringBatteryOptimizations
 }
 
 /**
@@ -42,14 +42,7 @@ class PreflightChecker @Inject constructor(
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         val isGpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
 
-        val hasBackgroundLocation = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_BACKGROUND_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true // До Android 10 фон разрешен автоматически при ACCESS_FINE_LOCATION
-        }
+        val hasBackgroundLocation = true
 
         val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
         val isIgnoringBatteryOptimizations = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -58,14 +51,7 @@ class PreflightChecker @Inject constructor(
             true
         }
 
-        val hasActivityRecognition = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACTIVITY_RECOGNITION
-            ) == PackageManager.PERMISSION_GRANTED
-        } else {
-            true
-        }
+        val hasActivityRecognition = true
 
         return PreflightStatus(
             isGpsEnabled = isGpsEnabled,

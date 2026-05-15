@@ -45,6 +45,7 @@ class TelemetryExportUseCase @Inject constructor(
     private val lampStatisticsRepository: LampStatisticsRepository,
     private val settingsRepository: SettingsRepository,
     private val profileRepository: ProfileRepository,
+    private val eventLogDao: com.figago.data.dao.EventLogDao,
 ) {
 
     companion object {
@@ -174,6 +175,20 @@ class TelemetryExportUseCase @Inject constructor(
                     errorsFile.inputStream().use { it.copyTo(zip) }
                     zip.closeEntry()
                 }
+                
+                // Добавляем системные события телеметрии
+                val events = eventLogDao.getAllEvents()
+                val eventsArray = JSONArray()
+                events.forEach { e ->
+                    eventsArray.put(JSONObject().apply {
+                        put("id", e.id)
+                        put("dayId", e.dayId)
+                        put("timestamp", e.timestamp)
+                        put("eventType", e.eventType)
+                        put("context", e.context)
+                    })
+                }
+                addJsonToZip(zip, "events.json", eventsArray.toString(2))
             }
 
             // 6. GPS-координаты

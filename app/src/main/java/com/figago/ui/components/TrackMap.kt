@@ -87,8 +87,16 @@ fun TrackMap(
         }
     }
 
+    val context = androidx.compose.ui.platform.LocalContext.current
+    val hasLocationPermission = androidx.core.content.ContextCompat.checkSelfPermission(
+        context, android.Manifest.permission.ACCESS_FINE_LOCATION
+    ) == android.content.pm.PackageManager.PERMISSION_GRANTED ||
+    androidx.core.content.ContextCompat.checkSelfPermission(
+        context, android.Manifest.permission.ACCESS_COARSE_LOCATION
+    ) == android.content.pm.PackageManager.PERMISSION_GRANTED
+
     val mapProperties = MapProperties(
-        isMyLocationEnabled = showMyLocation,
+        isMyLocationEnabled = showMyLocation && hasLocationPermission,
         mapType = MapType.NORMAL,
     )
 

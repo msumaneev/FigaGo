@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">პანელი</string>
   <string name="nav_history">ისტორია</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">დასრულება</string>
   <string name="dashboard_resume">განახლება</string>
   <string name="carousel_add">დამატება</string>
+  <string name="dashboard_manual_transport_start">ტრანსპორტში ვარ</string>
+  <string name="dashboard_manual_transport_stop">ტრანსპორტის დატოვება</string>
   <string name="dashboard_mileage">მანძილი</string>
   <string name="dashboard_time_elapsed">მგზავრობის დრო</string>
   <string name="dashboard_avg_speed">საშ. სიჩქარე</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- ტელემეტრია -->
+  <string name="settings_delete_profile">პროფილის წაშლა</string>
+  <string name="settings_auto_transport_title">ტრანსპორტით მგზავრობის ამოცნობა</string>
+  <string name="settings_auto_transport_desc">ავტომატურად შეაჩერე ბატარეის გაანგარიშება, როცა სიჩქარე ეტლის მაქსიმუმს გადააჭარბებს.</string>
+  <string name="settings_voice_vibrate">ვიბრაცია ბრძანებისას</string>
+  <string name="settings_voice_sound">ხმოვანი სიგნალი</string>
   <string name="settings_contact_developer">დეველოპერთან დაკავშირება</string>
-  <string name="telemetry_dialog_title">მონაცემების ექსპორტი</string>
-  <string name="telemetry_dialog_subtitle">აირჩიეთ რა მონაცემები გაიგზავნოს დეველოპერთან დიაგნოსტიკისთვის</string>
-  <string name="telemetry_cat_device">მოწყობილობა</string>
-  <string name="telemetry_cat_device_desc">მოდელი, Android ვერსია, აპის ვერსია</string>
-  <string name="telemetry_cat_settings">პარამეტრები</string>
-  <string name="telemetry_cat_settings_desc">ეტლის პროფილი, TTS, GPS, ერთეულები</string>
-  <string name="telemetry_cat_battery">ბატარეა</string>
-  <string name="telemetry_cat_battery_desc">LED მოვლენები და ნათურების სტატისტიკა</string>
-  <string name="telemetry_cat_trips">მგზავრობის ისტორია</string>
-  <string name="telemetry_cat_trips_desc">სესიები და სეგმენტები (30 დღე)</string>
-  <string name="telemetry_cat_errors">შეცდომების ჟურნალი</string>
-  <string name="telemetry_cat_errors_desc">გამონაკლისები და ავარიები</string>
-  <string name="telemetry_cat_gps">GPS კოორდინატები</string>
-  <string name="telemetry_cat_gps_desc">მარშრუტები (შეიძლება ადგილი დაიკავოს)</string>
-  <string name="telemetry_btn_send">გაგზავნა</string>
-  <string name="lamp_number_title">ნათურა %d</string>
-  <string name="lamp_stat_fact">ფაქტი: ≈ %.1f კმ</string>
+  <string name="lamp_number_title">ინდიკატორი %d</string>
+  <string name="lamp_stat_fact">ფაქტობრივი: ≈ %.1f</string>
   <string name="lamp_stat_no_data">მონაცემები არ არის</string>
-  <string name="dashboard_stat_warning">⚠ სტატისტიკა მნიშვნელოვნად განსხვავდება დაყენებული მნიშვნელობებისგან. შეეხეთ კორექტირებისთვის.</string>
+  <string name="dashboard_stat_warning">⚠ სტატისტიკა მნიშვნელოვნად განსხვავდება პარამეტრებისგან. შეეხეთ გასასწორებლად.</string>
 </resources>

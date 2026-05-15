@@ -42,12 +42,21 @@ class ErrorLogCollector(private val context: Context) {
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {
                 writeError(throwable)
+                
+                // Запускаем CrashActivity
+                val intent = android.content.Intent(context, com.figago.ui.CrashActivity::class.java).apply {
+                    putExtra("EXTRA_STACK_TRACE", throwable.stackTraceToString())
+                    addFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK or android.content.Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                }
+                context.startActivity(intent)
+                
+                // Убиваем процесс, чтобы система не показала стандартный диалог
+                android.os.Process.killProcess(android.os.Process.myPid())
+                kotlin.system.exitProcess(10)
             } catch (_: Exception) {
                 // Не допускаем рекурсию ошибок
+                defaultHandler?.uncaughtException(thread, throwable)
             }
-
-            // Передаём оригинальному обработчику (для крэш-репортов и т.д.)
-            defaultHandler?.uncaughtException(thread, throwable)
         }
     }
 

@@ -22,6 +22,7 @@ import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -37,6 +38,8 @@ fun LabeledSettingRow(
     description: String? = null,
     accentColor: Color? = null,
     descriptionColor: Color? = null,
+    titleIcon: (@Composable () -> Unit)? = null,
+    actionIcon: (@Composable () -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     Row(
@@ -44,44 +47,44 @@ fun LabeledSettingRow(
             .fillMaxWidth()
             .padding(vertical = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Top,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             modifier = Modifier
                 .weight(1f)
-                .height(108.dp) 
+                .padding(end = 16.dp),
+            verticalArrangement = Arrangement.Center
         ) {
-            Box(
-                modifier = Modifier.height(36.dp),
-                contentAlignment = Alignment.CenterStart
-            ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                if (titleIcon != null) {
+                    titleIcon()
+                    Spacer(modifier = Modifier.width(8.dp))
+                }
                 Text(
                     text = title,
                     fontSize = 18.sp,
                     color = accentColor ?: MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.weight(1f, fill = false)
                 )
+                if (actionIcon != null) {
+                    Spacer(modifier = Modifier.width(8.dp))
+                    actionIcon()
+                }
             }
             if (description != null) {
-                Box(
-                    modifier = Modifier.weight(1f).padding(top = 4.dp),
-                    contentAlignment = Alignment.TopStart
-                ) {
-                    Text(
-                        text = description,
-                        fontSize = 14.sp,
-                        color = descriptionColor ?: MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
-                        lineHeight = 16.sp
-                    )
-                }
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = description,
+                    fontSize = 14.sp,
+                    color = descriptionColor ?: MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f),
+                    lineHeight = 16.sp
+                )
             }
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
-
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.height(108.dp)
         ) {
             content()
         }
@@ -98,8 +101,10 @@ fun WheelNumberPickerSetting(
     suffix: String = "",
     accentColor: Color? = null,
     descriptionColor: Color? = null,
+    titleIcon: (@Composable () -> Unit)? = null,
+    actionIcon: (@Composable () -> Unit)? = null,
 ) {
-    LabeledSettingRow(title, description, accentColor, descriptionColor) {
+    LabeledSettingRow(title, description, accentColor, descriptionColor, titleIcon, actionIcon) {
         WheelNumberPickerCore(
             value = value,
             range = range,
@@ -135,23 +140,28 @@ fun WheelNumberPickerCore(
 
     // Прокрутка при внешнем изменении value (смена профиля)
     LaunchedEffect(value) {
-
         val targetIndex = items.indexOf(value).coerceAtLeast(0)
-
         if (targetIndex != listState.firstVisibleItemIndex) {
-
-            isExternalScroll = true
-            listState.scrollToItem(targetIndex)
-            isExternalScroll = false
+            // Избегаем прерывания текущей ручной прокрутки (защита от рекурсии)
+            if (!listState.isScrollInProgress) {
+                isExternalScroll = true
+                listState.scrollToItem(targetIndex)
+                isExternalScroll = false
+            }
         }
     }
+
+    val currentOnValueChange by rememberUpdatedState(onValueChange)
+    val currentValue by rememberUpdatedState(value)
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex }
             .collect { index ->
-
-                if (!isExternalScroll && index in items.indices) {
-                    onValueChange(items[index])
+                if (index in items.indices) {
+                    val newValue = items[index]
+                    if (!isExternalScroll && newValue != currentValue) {
+                        currentOnValueChange(newValue)
+                    }
                 }
             }
     }

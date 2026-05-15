@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">لوحة</string>
   <string name="nav_history">السجل</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">إنهاء</string>
   <string name="dashboard_resume">استئناف</string>
   <string name="carousel_add">إضافة</string>
+  <string name="dashboard_manual_transport_start">في وسيلة النقل</string>
+  <string name="dashboard_manual_transport_stop">مغادرة النقل</string>
   <string name="dashboard_mileage">المسافة</string>
   <string name="dashboard_time_elapsed">وقت الرحلة</string>
   <string name="dashboard_avg_speed">متوسط السرعة</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- القياس عن بعد -->
-  <string name="settings_contact_developer">التواصل مع المطور</string>
-  <string name="telemetry_dialog_title">تصدير البيانات</string>
-  <string name="telemetry_dialog_subtitle">اختر البيانات المراد إرسالها للمطور للتشخيص</string>
-  <string name="telemetry_cat_device">الجهاز</string>
-  <string name="telemetry_cat_device_desc">الطراز، إصدار أندرويد، إصدار التطبيق</string>
-  <string name="telemetry_cat_settings">الإعدادات</string>
-  <string name="telemetry_cat_settings_desc">ملف الكرسي، TTS، GPS، الوحدات</string>
-  <string name="telemetry_cat_battery">البطارية</string>
-  <string name="telemetry_cat_battery_desc">أحداث LED وإحصائيات المصابيح</string>
-  <string name="telemetry_cat_trips">سجل الرحلات</string>
-  <string name="telemetry_cat_trips_desc">الجلسات والمقاطع (30 يومًا)</string>
-  <string name="telemetry_cat_errors">سجل الأخطاء</string>
-  <string name="telemetry_cat_errors_desc">الاستثناءات والأعطال</string>
-  <string name="telemetry_cat_gps">إحداثيات GPS</string>
-  <string name="telemetry_cat_gps_desc">المسارات (قد تشغل مساحة كبيرة)</string>
-  <string name="telemetry_btn_send">إرسال</string>
+  <string name="settings_delete_profile">حذف الملف الشخصي</string>
+  <string name="settings_auto_transport_title">اكتشاف رحلة النقل</string>
+  <string name="settings_auto_transport_desc">إيقاف حساب البطارية مؤقتاً تلقائياً عندما تتجاوز السرعة الحد الأقصى للكرسي المتحرك.</string>
+  <string name="settings_voice_vibrate">اهتزاز عند الأمر</string>
+  <string name="settings_voice_sound">تنبيه صوتي</string>
+  <string name="settings_contact_developer">اتصل بالمطور</string>
   <string name="lamp_number_title">مصباح %d</string>
-  <string name="lamp_stat_fact">فعلي: ≈ %.1f كم</string>
+  <string name="lamp_stat_fact">الفعلي: ≈ %.1f</string>
   <string name="lamp_stat_no_data">لا توجد بيانات</string>
-  <string name="dashboard_stat_warning">⚠ الإحصائيات تختلف كثيرًا عن القيم المحددة. انقر للتعديل.</string>
+  <string name="dashboard_stat_warning">⚠ تختلف الإحصائيات بشكل كبير عن الإعدادات. اضغط للتعديل.</string>
 </resources>

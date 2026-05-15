@@ -3,6 +3,8 @@ package com.figago.ui.settings
 import androidx.activity.compose.BackHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.gestures.snapping.rememberSnapFlingBehavior
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,6 +23,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
@@ -36,6 +39,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.SegmentedButton
@@ -115,10 +119,12 @@ fun SettingsScreen(
                     modifier = Modifier.padding(16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    SectionHeader(text = stringResource(R.string.settings_section_passport))
+                    // SectionHeader removed
 
                     val iconOptions = listOf(
-                        R.drawable.ic_notification_preview to stringResource(R.string.profile_icon_default),
+                        R.drawable.ic_profile_man to stringResource(R.string.profile_icon_man),
+                        R.drawable.ic_profile_biker to stringResource(R.string.profile_icon_biker),
+                        R.drawable.ic_profile_scooter to stringResource(R.string.profile_icon_scooter),
                         R.drawable.ic_wheelchair_permobil_f to "Permobil F",
                         R.drawable.ic_wheelchair_permobil_m to "Permobil M",
                         R.drawable.ic_wheelchair_optimus to "Optimus",
@@ -136,7 +142,7 @@ fun SettingsScreen(
                             onExpandedChange = { expanded = it },
                             modifier = Modifier.width(80.dp)
                         ) {
-                            val defaultIcon = if (activeProfile?.type == com.figago.data.entity.ProfileType.ELECTRIC) R.drawable.ic_notification_preview else R.drawable.ic_wheelchair_manual
+                            val defaultIcon = if (activeProfile?.type == com.figago.data.entity.ProfileType.ELECTRIC) R.drawable.ic_profile_man else R.drawable.ic_wheelchair_manual
                             val currentIconId = activeProfile?.iconId ?: 0
                             val safeIconId = if (currentIconId != 0) currentIconId else defaultIcon
                             OutlinedTextField(
@@ -172,7 +178,7 @@ fun SettingsScreen(
                         OutlinedTextField(
                             value = activeProfile?.name ?: "",
                             onValueChange = { newName -> viewModel.updateProfile { it.copy(name = newName) } },
-                            label = { Text(stringResource(R.string.profile_name_label)) },
+                            label = null,
                             modifier = Modifier.weight(1f),
                             singleLine = true
                         )
@@ -204,16 +210,13 @@ fun SettingsScreen(
                         suffix = speedSuffix
                     )
 
-                    // Удалить профиль (если больше 1)
-                    if (profiles.size > 1) {
-                        OutlinedButton(
-                            onClick = { showDeleteDialog = true },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
-                        ) {
-                            Text("Удалить профиль")
-                        }
-                    }
+                    SwitchSetting(
+                        title = stringResource(com.figago.R.string.settings_auto_transport_title),
+                        description = stringResource(com.figago.R.string.settings_auto_transport_desc),
+                        checked = state.autoTransportDetectionEnabled,
+                        onCheckedChange = viewModel::setAutoTransportDetectionEnabled,
+                    )
+
                 }
             }
 
@@ -258,8 +261,7 @@ fun SettingsScreen(
                                         DropdownMenuItem(
                                             text = { Text("$count") },
                                             onClick = {
-                                                // Пересчитываем ledDistances по новым весам
-                                                val newDistances = BatteryWeightProfiles.calculateDistances(currentMaxMileage, count)
+                                                val newDistances = BatteryWeightProfiles.calculateDistancesWithDelta(currentMaxMileage, emptyList(), count)
                                                 viewModel.updateProfile { it.copy(ledCount = count, ledDistances = newDistances) }
                                                 ledDropdownExpanded = false
                                             }
@@ -273,56 +275,101 @@ fun SettingsScreen(
                         WheelNumberPickerSetting(
                             title = stringResource(R.string.profile_range_title),
                             description = if (state.unitSystem == UNIT_MILES) stringResource(R.string.profile_range_desc_mi) else stringResource(R.string.profile_range_desc_km),
+                            actionIcon = {
+                                androidx.compose.material3.IconButton(
+                                    onClick = {
+                                        val newDistances = BatteryWeightProfiles.calculateDistancesWithDelta(currentMaxMileage, emptyList(), currentLedCount)
+                                        viewModel.updateProfile { it.copy(ledDistances = newDistances) }
+                                    },
+                                    modifier = Modifier.size(24.dp)
+                                ) {
+                                    androidx.compose.material3.Icon(
+                                        imageVector = androidx.compose.material.icons.Icons.Default.Refresh,
+                                        contentDescription = "Reset Distances",
+                                        tint = MaterialTheme.colorScheme.primary
+                                    )
+                                }
+                            },
                             value = currentMaxMileage.toInt(),
                             range = 5..99,
                             onValueChange = { miles ->
                                 val newMileage = miles.toFloat()
-                                // Пересчитываем все лампочки по весам
-                                val newDistances = BatteryWeightProfiles.calculateDistances(newMileage, currentLedCount)
-                                viewModel.updateProfile { it.copy(maxMileage = newMileage, ledDistances = newDistances) }
+                                viewModel.updateProfile { dbProfile ->
+                                    val newDistances = BatteryWeightProfiles.calculateDistancesWithDelta(newMileage, emptyList(), dbProfile.ledCount ?: 5)
+                                    dbProfile.copy(maxMileage = newMileage, ledDistances = newDistances)
+                                }
                             },
                             suffix = batDistSuffix
                         )
 
                         // 3. Индивидуальные барабаны для каждой лампочки
                         val currentDistances = activeProfile?.ledDistances
-                            ?: BatteryWeightProfiles.calculateDistances(currentMaxMileage, currentLedCount)
+                            ?: BatteryWeightProfiles.calculateDistancesWithDelta(currentMaxMileage, emptyList(), currentLedCount)
 
                         // Статистика по лампочкам
                         val lampAverages by viewModel.lampAverages.collectAsStateWithLifecycle()
 
-                        for (i in 0 until currentLedCount) {
-                            val lampDist = currentDistances.getOrElse(i) { 0f }
-                            val avgStat = lampAverages[i]
-                            val statText = if (avgStat != null) {
-                                String.format(stringResource(R.string.lamp_stat_fact), avgStat)
-                            } else {
-                                stringResource(R.string.lamp_stat_no_data)
-                            }
-                            // Цвет статистики: оранжевый если отклонение > 20%
-                            val statColor = if (avgStat != null && lampDist > 0 && avgStat < lampDist * 0.8f) {
-                                Color(0xFFFB8C00) // оранжевый
-                            } else {
-                                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
-                            }
-
-                            WheelNumberPickerSetting(
-                                title = String.format(stringResource(R.string.lamp_number_title), i + 1),
-                                description = statText,
-                                descriptionColor = statColor,
-                                value = lampDist.toInt(),
-                                range = 1..99,
-                                onValueChange = { newVal ->
-                                    val updated = currentDistances.toMutableList()
-                                    if (i < updated.size) {
-                                        updated[i] = newVal.toFloat()
+                        OutlinedCard(
+                            modifier = Modifier.fillMaxWidth(),
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant)
+                        ) {
+                            Column(
+                                modifier = Modifier.padding(16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                for (i in 0 until currentLedCount) {
+                                    val lampDist = currentDistances.getOrElse(i) { 0f }
+                                    val avgStat = lampAverages[i]
+                                    val statText = if (avgStat != null) {
+                                        String.format(stringResource(R.string.lamp_stat_fact), avgStat)
+                                    } else {
+                                        stringResource(R.string.lamp_stat_no_data)
                                     }
-                                    // Пересчитываем общий пробег = сумма лампочек
-                                    val newTotal = BatteryWeightProfiles.calculateTotalMileage(updated)
-                                    viewModel.updateProfile { it.copy(maxMileage = newTotal, ledDistances = updated) }
-                                },
-                                suffix = batDistSuffix
-                            )
+                                    // Цвет статистики: оранжевый если отклонение > 20%
+                                    val statColor = if (avgStat != null && lampDist > 0 && avgStat < lampDist * 0.8f) {
+                                        Color(0xFFFB8C00) // оранжевый
+                                    } else {
+                                        MaterialTheme.colorScheme.onSurface.copy(alpha = 0.5f)
+                                    }
+
+                                    // На Дашборде лампа 1 - красная, лампа 5 - зеленая.
+                                    // У нас i=0 это зеленая (последняя), i=4 это красная (первая).
+                                    // Значит номер лампы: (currentLedCount - i)
+                                    val lampNumber = currentLedCount - i
+                                    
+                                    WheelNumberPickerSetting(
+                                        title = String.format(stringResource(R.string.lamp_number_title), lampNumber),
+                                        description = statText,
+                                        descriptionColor = statColor,
+                                        value = lampDist.toInt(),
+                                        range = 1..99,
+                                        onValueChange = { newVal ->
+                                            viewModel.updateProfile { dbProfile ->
+                                                val dbDistances = dbProfile.ledDistances ?: BatteryWeightProfiles.calculateDistancesWithDelta(dbProfile.maxMileage ?: 20f, emptyList(), dbProfile.ledCount ?: 5)
+                                                val updated = dbDistances.toMutableList()
+                                                if (i < updated.size) {
+                                                    updated[i] = newVal.toFloat()
+                                                }
+                                                val newTotal = BatteryWeightProfiles.calculateTotalMileage(updated)
+                                                dbProfile.copy(maxMileage = newTotal, ledDistances = updated)
+                                            }
+                                        },
+                                        suffix = batDistSuffix,
+                                        titleIcon = {
+                                            // На Дашборде генерируется так: fraction = (lampNumber - 1) / (maxCount - 1)
+                                            val fraction = if (currentLedCount <= 1) 1f else (lampNumber - 1).toFloat() / (currentLedCount - 1)
+                                            val color = when {
+                                                fraction < 0.33f -> Color(0xFFE53935) // красный
+                                                fraction < 0.66f -> Color(0xFFFB8C00) // оранжевый
+                                                else -> Color(0xFF43A047) // зелёный
+                                            }
+                                            Box(modifier = Modifier
+                                                .size(12.dp)
+                                                .background(color, androidx.compose.foundation.shape.RoundedCornerShape(4.dp)))
+                                        }
+                                    )
+                                }
+                            }
                         }
                     }
                 }
@@ -343,22 +390,7 @@ fun SettingsScreen(
                 }
             }
 
-            // ===== GPS и Трекинг =====
-            ElevatedCard(modifier = Modifier.fillMaxWidth()) {
-                Column(
-                    modifier = Modifier.padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    SectionHeader(text = stringResource(com.figago.R.string.settings_gps_bg_section))
 
-                    SwitchSetting(
-                        title = stringResource(com.figago.R.string.settings_auto_transport_title),
-                        description = stringResource(com.figago.R.string.settings_auto_transport_desc),
-                        checked = state.autoTransportDetectionEnabled,
-                        onCheckedChange = viewModel::setAutoTransportDetectionEnabled,
-                    )
-                }
-            }
 
             // ===== Голосовые команды =====
             ElevatedCard(modifier = Modifier.fillMaxWidth()) {
@@ -475,6 +507,19 @@ fun SettingsScreen(
                     }
                 }
             }
+
+            // Удалить профиль (если больше 1)
+            if (profiles.size > 1) {
+                OutlinedButton(
+                    onClick = { showDeleteDialog = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.outlinedButtonColors(contentColor = MaterialTheme.colorScheme.error)
+                ) {
+                    Text(stringResource(R.string.settings_delete_profile))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             // ===== Версия приложения =====
             Text(

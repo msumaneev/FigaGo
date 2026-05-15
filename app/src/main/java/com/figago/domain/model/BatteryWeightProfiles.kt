@@ -38,15 +38,56 @@ object BatteryWeightProfiles {
     }
 
     /**
-     * Рассчитывает пробег каждой лампочки на основе общего пробега и весов.
-     *
-     * @param maxMileage общий пробег на одном заряде (км)
-     * @param ledCount количество лампочек
-     * @return список пробегов для каждой лампочки (км)
+     * Рассчитывает новые дистанции при изменении общего пробега.
+     * Если это первичный пересчет (старые дистанции пустые), использует веса.
+     * Иначе вычисляет дельту и равномерно распределяет ее (с округлением) по текущим лампам.
      */
-    fun calculateDistances(maxMileage: Float, ledCount: Int): List<Float> {
-        val weights = getWeights(ledCount)
-        return weights.map { weight -> maxMileage * weight }
+    fun calculateDistancesWithDelta(newMaxMileage: Float, currentDistances: List<Float>, ledCount: Int): List<Float> {
+        if (currentDistances.isEmpty() || currentDistances.size != ledCount) {
+            val weights = getWeights(ledCount)
+            val exactDistances = weights.map { weight -> newMaxMileage * weight }
+            val roundedDistances = exactDistances.map { kotlin.math.round(it) }.toMutableList()
+            
+            // Adjust to ensure the sum exactly matches the target newMaxMileage
+            var diff = newMaxMileage.toInt() - roundedDistances.sum().toInt()
+            var i = 0
+            while (diff != 0) {
+                if (diff > 0) {
+                    roundedDistances[i % ledCount] += 1f
+                    diff--
+                } else {
+                    if (roundedDistances[i % ledCount] > 0f) {
+                        roundedDistances[i % ledCount] -= 1f
+                        diff++
+                    }
+                }
+                i++
+            }
+            return roundedDistances
+        }
+
+        val oldTotal = currentDistances.sum()
+        val delta = newMaxMileage - oldTotal
+        if (delta == 0f) return currentDistances
+
+        val result = currentDistances.toMutableList()
+        val deltaInt = delta.toInt()
+        val baseDelta = deltaInt / ledCount
+        var remainder = kotlin.math.abs(deltaInt % ledCount)
+
+        for (i in result.indices) {
+            result[i] += baseDelta.toFloat()
+            if (remainder > 0) {
+                result[i] += if (delta > 0) 1f else -1f
+                remainder--
+            }
+        }
+        
+        // Prevent negative values
+        for (i in result.indices) {
+            if (result[i] < 0f) result[i] = 0f
+        }
+        return result
     }
 
     /**

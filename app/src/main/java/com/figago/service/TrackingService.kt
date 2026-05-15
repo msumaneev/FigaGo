@@ -86,9 +86,11 @@ class TrackingService : LifecycleService() {
         const val ACTION_ANNOUNCE_STATUS = "com.figago.action.ANNOUNCE_STATUS"
         const val ACTION_SET_REALTIME_MODE = "com.figago.action.SET_REALTIME_MODE"
         const val ACTION_ACTIVITY_TRANSITION = "com.figago.action.ACTIVITY_TRANSITION"
+        const val ACTION_SET_MANUAL_TRANSPORT = "com.figago.action.SET_MANUAL_TRANSPORT"
 
         const val EXTRA_LED_COUNT = "extra_led_count"
         const val EXTRA_IS_REALTIME = "extra_is_realtime"
+        const val EXTRA_IS_TRANSPORT = "extra_is_transport"
 
         private const val NOTIFICATION_ID = 1001
         private const val CHANNEL_ID = "figago_tracking"
@@ -113,6 +115,7 @@ class TrackingService : LifecycleService() {
     @Inject lateinit var recordLedEventUseCase: RecordLedEventUseCase
     @Inject lateinit var forecastUseCase: ForecastRemainingDistanceUseCase
     @Inject lateinit var ttsAnnouncer: TtsAnnouncerService
+    @Inject lateinit var eventLogDao: com.figago.data.dao.EventLogDao
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var locationCallback: LocationCallback? = null
@@ -163,6 +166,40 @@ class TrackingService : LifecycleService() {
                 }
             }
         }
+
+        lifecycleScope.launch {
+            var isFirstEmission = true
+            kotlinx.coroutines.flow.combine(
+                settingsRepository.observeTtsAnnounceMode(),
+                settingsRepository.observeTtsDistanceIntervalKm(),
+                settingsRepository.observeTtsTimeIntervalMin()
+            ) { mode, dist, time ->
+                Triple(mode, dist, time)
+            }.collect { (mode, dist, time) ->
+                if (!isFirstEmission) {
+                    // Сбрасываем старый таймер и начинаем отсчет заново (п. 4.1)
+                    if (isRecording) {
+                        ttsAnnouncer.resetCounters()
+                    }
+                    // Логируем изменение (п. 1.4)
+                    try {
+                        val session = sessionRepository.getActiveSession()
+                        if (session != null) {
+                            eventLogDao.insert(
+                                com.figago.data.entity.EventLogEntity(
+                                    dayId = session.id,
+                                    eventType = "SETTINGS_CHANGED",
+                                    context = "{\"ttsMode\": \"$mode\", \"ttsDistance\": $dist, \"ttsTime\": $time}"
+                                )
+                            )
+                        }
+                    } catch (e: Exception) {
+                        android.util.Log.e("TrackingService", "Failed to log SETTINGS_CHANGED", e)
+                    }
+                }
+                isFirstEmission = false
+            }
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -199,6 +236,10 @@ class TrackingService : LifecycleService() {
                         }
                     }
                 }
+            }
+            ACTION_SET_MANUAL_TRANSPORT -> {
+                val isTransport = intent.getBooleanExtra(EXTRA_IS_TRANSPORT, false)
+                handleSetManualTransport(isTransport)
             }
         }
 
@@ -409,6 +450,13 @@ class TrackingService : LifecycleService() {
         }
     }
 
+    private fun handleSetManualTransport(isTransport: Boolean) {
+        lifecycleScope.launch {
+            trackingEngine.setManualTransportActive(isTransport)
+            vibrateConfirmation()
+        }
+    }
+
     // ===== GPS-трекинг =====
 
     @Suppress("MissingPermission") // Разрешение проверяется на уровне UI перед запуском сервиса
@@ -594,9 +642,12 @@ class TrackingService : LifecycleService() {
                 }
             }
 
+            val isManualTransport = trackingEngine.trackingState.value.isManualTransportActive
+            val finalIsTransport = isTransportMode || isManualTransport
+
             // Фильтр: слишком маленькое перемещение (GPS-шум)
             if (distance < MIN_DISTANCE_THRESHOLD) {
-                trackingEngine.updateState { it.copy(instantSpeedKmh = 0.0, isTransport = isTransportMode) }
+                trackingEngine.updateState { it.copy(instantSpeedKmh = 0.0, isTransport = finalIsTransport) }
                 lifecycleScope.launch {
                     val session = sessionRepository.getActiveSession()
                     if (session != null) checkTtsAnnouncement(session.totalDistance, session.id)
@@ -611,7 +662,7 @@ class TrackingService : LifecycleService() {
             }
 
             // Добавляем дистанцию коляске только если не в транспорте
-            if (!isTransportMode) {
+            if (!finalIsTransport) {
                 currentSegmentDistance += distance
             }
 
@@ -623,12 +674,15 @@ class TrackingService : LifecycleService() {
                 trackingEngine.updateState { it.copy(
                     instantSpeedKmh = speedKmH.toDouble(),
                     segmentAverageSpeedKmh = avgSpeed,
-                    isTransport = isTransportMode,
+                    isTransport = finalIsTransport,
                 )}
             }
         }
 
         lastLocation = location
+        
+        val isManualTransport = trackingEngine.trackingState.value.isManualTransportActive
+        val finalIsTransport = isTransportMode || isManualTransport
 
         return com.figago.domain.model.LocationPoint(
             id = 0,
@@ -636,7 +690,7 @@ class TrackingService : LifecycleService() {
             latitude = location.latitude,
             longitude = location.longitude,
             timestamp = System.currentTimeMillis(),
-            isTransport = isTransportMode,
+            isTransport = finalIsTransport,
         )
     }
 

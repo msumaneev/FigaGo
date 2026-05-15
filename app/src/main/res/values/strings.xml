@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="app_name">FigaGo</string>
-  <string name="new_wheelchair_default_name">Новая коляска</string>
+  <string name="new_wheelchair_default_name">Новый профиль</string>
   <string name="notification_channel_id">figago_tracking</string>
   <string name="notification_channel_name">Запись трека</string>
   <string name="notification_tracking_title">FigaGo — запись трека</string>
@@ -60,9 +60,9 @@
   <string name="settings_total_distance_desc">Прогнозируемый пробег при полном заряде</string>
   <string name="settings_level_unit">%d уровень (км)</string>
   <string name="settings_level_critical">1 уровень (Критичный) (км)</string>
-  <string name="settings_auto_transport_title">Определять транспорт</string>
-  <string name="settings_auto_transport_desc">Автоматическая пауза в транспорте</string>
-  <string name="settings_voice_assistant_section">Голосовой помощник</string>
+  <string name="settings_auto_transport_title">Определять поездку в транспорте</string>
+  <string name="settings_auto_transport_desc">Автоматически приостанавливать расчет заряда батареи при превышении максимальной скорости коляски.</string>
+  <string name="settings_voice_assistant_section">Голосовой помощник</string>>
   <string name="settings_voice_setup">Настроить голосовые команды</string>
   <string name="settings_voice_home_prompt">Открываем Google Home...</string>
   <string name="settings_language_title">Язык интерфейса</string>
@@ -74,6 +74,8 @@
   <string name="dashboard_pause">Пауза</string>
   <string name="dashboard_finish">Стоп/Финиш</string>
   <string name="dashboard_resume">Возобновить</string>
+  <string name="dashboard_manual_transport_start">Еду в транспорте</string>
+  <string name="dashboard_manual_transport_stop">Покинуть транспорт</string>
   <string name="dashboard_forecast_remaining">≈ %.1f км осталось</string>
   <string name="history_clear_all">Очистить историю</string>
   <string name="history_clear_dialog_title">Очистить историю?</string>
@@ -154,7 +156,7 @@
   <string name="unit_pcs">шт</string>
   <string name="profile_title">Паспорт Коляски</string>
   <string name="profile_save_and_exit">Сохранить и Выйти</string>
-  <string name="profile_name_label">Название коляски</string>
+  <string name="profile_name_label"></string>
   <string name="profile_icon_label">Иконка</string>
   <string name="profile_type_electric">Электрическая</string>
   <string name="profile_type_manual">Ручная</string>
@@ -168,9 +170,12 @@
   <string name="profile_led_title">Лампочки на пульте</string>
   <string name="profile_led_desc">Индикаторы заряда батареи.</string>
   <string name="profile_icon_default">Стандартная электричка</string>
+  <string name="profile_icon_man">Человек гуляющий</string>
+  <string name="profile_icon_biker">Велосипед</string>
+  <string name="profile_icon_scooter">Самокат</string>
   <string name="profile_icon_custom_1">Кастомная 1</string>
   <string name="profile_icon_exotic">Exotic</string>
-  <string name="settings_section_passport">Паспорт коляски</string>
+  <string name="settings_section_passport"></string>
   <string name="settings_section_battery">Батарея</string>
   <string name="settings_section_display">Отображение метрик</string>
   <string name="settings_unit_title">Единицы измерения</string>
@@ -208,6 +213,7 @@
   <string name="fmt_feet">%d футов</string>
   <string name="fmt_mi_ft">%1$d мили %2$d футов</string>
   <string name="fmt_mi_only">%d мили</string>
+  <string name="settings_delete_profile">Удалить профиль</string>
   <string name="delete_profile_title">Удалить %1$s?</string>
   <string name="delete_profile_confirm_simple">Вы уверены, что хотите удалить коляску?</string>
   <string name="delete_profile_confirm_complex">У этой коляски есть история поездок (%1$d шт.). Что с ними сделать?</string>
@@ -237,7 +243,7 @@
 
   <!-- Лампочки: индивидуальные настройки -->
   <string name="lamp_number_title">Лампочка %d</string>
-  <string name="lamp_stat_fact">Факт: ≈ %.1f км</string>
+  <string name="lamp_stat_fact">Факт: ≈ %.1f</string>
   <string name="lamp_stat_no_data">Нет данных</string>
 
   <!-- Dashboard: предупреждение о расхождении статистики -->

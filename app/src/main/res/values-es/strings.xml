@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">Panel</string>
   <string name="nav_history">Historial</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">Finalizar</string>
   <string name="dashboard_resume">Reanudar</string>
   <string name="carousel_add">Añadir</string>
+  <string name="dashboard_manual_transport_start">En transporte</string>
+  <string name="dashboard_manual_transport_stop">Dejar transporte</string>
   <string name="dashboard_mileage">Distancia</string>
   <string name="dashboard_time_elapsed">Tiempo</string>
   <string name="dashboard_avg_speed">Vel. media</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- Telemetría -->
+  <string name="settings_delete_profile">Eliminar Perfil</string>
+  <string name="settings_auto_transport_title">Detectar viaje en transporte</string>
+  <string name="settings_auto_transport_desc">Pausar automáticamente el cálculo de la batería cuando la velocidad supere el límite máximo de la silla.</string>
+  <string name="settings_voice_vibrate">Vibrar al comando</string>
+  <string name="settings_voice_sound">Señal de sonido</string>
   <string name="settings_contact_developer">Contactar al desarrollador</string>
-  <string name="telemetry_dialog_title">Exportar datos</string>
-  <string name="telemetry_dialog_subtitle">Elija qué datos enviar al desarrollador para diagnóstico</string>
-  <string name="telemetry_cat_device">Dispositivo</string>
-  <string name="telemetry_cat_device_desc">Modelo, versión de Android, versión de la app</string>
-  <string name="telemetry_cat_settings">Ajustes</string>
-  <string name="telemetry_cat_settings_desc">Perfil de silla, TTS, GPS, unidades</string>
-  <string name="telemetry_cat_battery">Batería</string>
-  <string name="telemetry_cat_battery_desc">Eventos LED y estadísticas de lámparas</string>
-  <string name="telemetry_cat_trips">Historial de viajes</string>
-  <string name="telemetry_cat_trips_desc">Sesiones y tramos (30 días)</string>
-  <string name="telemetry_cat_errors">Registro de errores</string>
-  <string name="telemetry_cat_errors_desc">Excepciones y fallos</string>
-  <string name="telemetry_cat_gps">Coordenadas GPS</string>
-  <string name="telemetry_cat_gps_desc">Rutas (puede ocupar mucho espacio)</string>
-  <string name="telemetry_btn_send">Enviar</string>
-  <string name="lamp_number_title">Lámpara %d</string>
-  <string name="lamp_stat_fact">Real: ≈ %.1f km</string>
+  <string name="lamp_number_title">LED %d</string>
+  <string name="lamp_stat_fact">Real: ≈ %.1f</string>
   <string name="lamp_stat_no_data">Sin datos</string>
-  <string name="dashboard_stat_warning">⚠ Las estadísticas difieren mucho de los valores configurados. Toque para ajustar.</string>
+  <string name="dashboard_stat_warning">⚠ Las estadísticas difieren significativamente de los ajustes. Toca para configurar.</string>
 </resources>

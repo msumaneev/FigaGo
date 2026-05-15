@@ -13,11 +13,9 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     
     <!-- Фоновая геолокация и игнорирование энергосбережения -->
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <!-- Activity Recognition (для определения транспорта) -->
-    <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
 
     <!-- Уведомления (Android 13+) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
@@ -37,6 +35,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FigaGo"
         tools:targetApi="35">
+
+        <!-- Экран вывода ошибки падения (Crash Reporter) -->
+        <activity
+            android:name=".ui.CrashActivity"
+            android:exported="false"
+            android:theme="@android:style/Theme.DeviceDefault.Light" />
 
         <!-- Главная Activity -->
         <activity

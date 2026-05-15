@@ -15,6 +15,7 @@ data class TrackingState(
     val instantSpeedKmh: Double = 0.0,
     val segmentAverageSpeedKmh: Double = 0.0,
     val isTransport: Boolean = false,
+    val isManualTransportActive: Boolean = false,
 )
 
 /**
@@ -29,6 +30,10 @@ class TrackingEngine @Inject constructor() {
 
     fun updateState(updater: (TrackingState) -> TrackingState) {
         _trackingState.value = updater(_trackingState.value)
+    }
+
+    fun setManualTransportActive(isActive: Boolean) {
+        _trackingState.value = _trackingState.value.copy(isManualTransportActive = isActive)
     }
 
     fun reset() {

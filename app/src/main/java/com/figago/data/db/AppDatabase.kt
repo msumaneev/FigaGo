@@ -37,8 +37,9 @@ import androidx.room.TypeConverters
         LedEventEntity::class,
         ProfileEntity::class,
         LampStatisticsEntity::class,
+        com.figago.data.entity.EventLogEntity::class,
     ],
-    version = 4,
+    version = 5,
     exportSchema = true,
 )
 @TypeConverters(Converters::class)
@@ -50,4 +51,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun ledEventDao(): LedEventDao
     abstract fun profileDao(): ProfileDao
     abstract fun lampStatisticsDao(): LampStatisticsDao
+    abstract fun eventLogDao(): com.figago.data.dao.EventLogDao
 }

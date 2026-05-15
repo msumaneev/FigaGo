@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">대시보드</string>
   <string name="nav_history">기록</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">종료</string>
   <string name="dashboard_resume">재개</string>
   <string name="carousel_add">추가</string>
+  <string name="dashboard_manual_transport_start">대중교통 탑승 중</string>
+  <string name="dashboard_manual_transport_stop">대중교통 하차</string>
   <string name="dashboard_mileage">주행거리</string>
   <string name="dashboard_time_elapsed">주행시간</string>
   <string name="dashboard_avg_speed">평균속도</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- 텔레메트리 -->
-  <string name="settings_contact_developer">개발자에게 연락</string>
-  <string name="telemetry_dialog_title">데이터 내보내기</string>
-  <string name="telemetry_dialog_subtitle">진단을 위해 개발자에게 보낼 데이터를 선택하세요</string>
-  <string name="telemetry_cat_device">기기</string>
-  <string name="telemetry_cat_device_desc">모델, Android 버전, 앱 버전</string>
-  <string name="telemetry_cat_settings">설정</string>
-  <string name="telemetry_cat_settings_desc">휠체어 프로필, TTS, GPS, 단위</string>
-  <string name="telemetry_cat_battery">배터리</string>
-  <string name="telemetry_cat_battery_desc">LED 이벤트 및 램프 통계</string>
-  <string name="telemetry_cat_trips">주행 기록</string>
-  <string name="telemetry_cat_trips_desc">세션 및 구간 (30일)</string>
-  <string name="telemetry_cat_errors">오류 로그</string>
-  <string name="telemetry_cat_errors_desc">예외 및 충돌</string>
-  <string name="telemetry_cat_gps">GPS 좌표</string>
-  <string name="telemetry_cat_gps_desc">경로 (용량이 클 수 있음)</string>
-  <string name="telemetry_btn_send">보내기</string>
-  <string name="lamp_number_title">램프 %d</string>
-  <string name="lamp_stat_fact">실적: ≈ %.1f km</string>
+  <string name="settings_delete_profile">프로필 삭제</string>
+  <string name="settings_auto_transport_title">교통수단 이용 감지</string>
+  <string name="settings_auto_transport_desc">속도가 휠체어 최대 속도를 초과하면 배터리 계산을 자동으로 일시 중지합니다.</string>
+  <string name="settings_voice_vibrate">명령 시 진동</string>
+  <string name="settings_voice_sound">소리 알림</string>
+  <string name="settings_contact_developer">개발자에게 문의</string>
+  <string name="lamp_number_title">LED %d</string>
+  <string name="lamp_stat_fact">실제: ≈ %.1f</string>
   <string name="lamp_stat_no_data">데이터 없음</string>
-  <string name="dashboard_stat_warning">⚠ 통계가 설정 값과 크게 다릅니다. 탭하여 조정하세요.</string>
+  <string name="dashboard_stat_warning">⚠ 통계가 설정과 크게 다릅니다. 조정하려면 탭하세요.</string>
 </resources>

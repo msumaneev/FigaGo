@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">ダッシュボード</string>
   <string name="nav_history">履歴</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">終了</string>
   <string name="dashboard_resume">再開</string>
   <string name="carousel_add">追加</string>
+  <string name="dashboard_manual_transport_start">乗車中</string>
+  <string name="dashboard_manual_transport_stop">降車</string>
   <string name="dashboard_mileage">走行距離</string>
   <string name="dashboard_time_elapsed">走行時間</string>
   <string name="dashboard_avg_speed">平均速度</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- テレメトリ -->
+  <string name="settings_delete_profile">プロファイル削除</string>
+  <string name="settings_auto_transport_title">乗り物移動を検出</string>
+  <string name="settings_auto_transport_desc">速度が車いすの上限を超えた場合、バッテリー計算を自動的に一時停止します。</string>
+  <string name="settings_voice_vibrate">コマンド実行時に振動</string>
+  <string name="settings_voice_sound">サウンドアラート</string>
   <string name="settings_contact_developer">開発者に連絡</string>
-  <string name="telemetry_dialog_title">データのエクスポート</string>
-  <string name="telemetry_dialog_subtitle">診断のために開発者に送信するデータを選択</string>
-  <string name="telemetry_cat_device">デバイス</string>
-  <string name="telemetry_cat_device_desc">モデル、Androidバージョン、アプリバージョン</string>
-  <string name="telemetry_cat_settings">設定</string>
-  <string name="telemetry_cat_settings_desc">車椅子プロファイル、TTS、GPS、単位</string>
-  <string name="telemetry_cat_battery">バッテリー</string>
-  <string name="telemetry_cat_battery_desc">LEDイベントとランプ統計</string>
-  <string name="telemetry_cat_trips">走行履歴</string>
-  <string name="telemetry_cat_trips_desc">セッションとセグメント（30日間）</string>
-  <string name="telemetry_cat_errors">エラーログ</string>
-  <string name="telemetry_cat_errors_desc">例外とクラッシュ</string>
-  <string name="telemetry_cat_gps">GPS座標</string>
-  <string name="telemetry_cat_gps_desc">ルート（容量が大きい場合あり）</string>
-  <string name="telemetry_btn_send">送信</string>
-  <string name="lamp_number_title">ランプ %d</string>
-  <string name="lamp_stat_fact">実績: ≈ %.1f km</string>
+  <string name="lamp_number_title">LED %d</string>
+  <string name="lamp_stat_fact">実測: ≈ %.1f</string>
   <string name="lamp_stat_no_data">データなし</string>
-  <string name="dashboard_stat_warning">⚠ 統計が設定値と大きく異なります。タップして調整。</string>
+  <string name="dashboard_stat_warning">⚠ 統計が設定と大きく異なります。タップして調整してください。</string>
 </resources>

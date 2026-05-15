@@ -54,6 +54,20 @@ object AppModule {
         }
     }
 
+    val MIGRATION_4_5 = object : Migration(4, 5) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                "CREATE TABLE IF NOT EXISTS `event_log` (" +
+                "`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
+                "`day_id` INTEGER NOT NULL, " +
+                "`timestamp` INTEGER NOT NULL, " +
+                "`event_type` TEXT NOT NULL, " +
+                "`context` TEXT NOT NULL, " +
+                "FOREIGN KEY(`day_id`) REFERENCES `day_session`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )"
+            )
+        }
+    }
+
     /** Единственный экземпляр Room-базы данных на весь жизненный цикл приложения. */
     @Provides
     @Singleton
@@ -63,7 +77,7 @@ object AppModule {
             AppDatabase::class.java,
             "figago_database"
         )
-        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+        .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
         .addCallback(object : androidx.room.RoomDatabase.Callback() {
             override fun onCreate(db: SupportSQLiteDatabase) {
                 super.onCreate(db)
@@ -94,4 +108,7 @@ object AppModule {
 
     @Provides
     fun provideLampStatisticsDao(db: AppDatabase): LampStatisticsDao = db.lampStatisticsDao()
+
+    @Provides
+    fun provideEventLogDao(db: AppDatabase): com.figago.data.dao.EventLogDao = db.eventLogDao()
 }

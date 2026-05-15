@@ -12,6 +12,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +24,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.scale
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material.icons.filled.PlayArrow
@@ -174,6 +176,8 @@ fun DashboardScreen(
 
             DashboardControlPanel(
                 dayState = state.dayState,
+                isAutoTransportEnabled = state.isAutoTransportEnabled,
+                isManualTransportActive = state.isManualTransportActive,
                 onStartDayAndTrack = {
                     val status = viewModel.checkPreflight()
                     if (status.isAllClear || isDiagnosticsSkipped) {
@@ -193,6 +197,7 @@ fun DashboardScreen(
                     }
                 },
                 onStopTrack = viewModel::stopTrack,
+                onToggleManualTransport = { viewModel.setManualTransport(!state.isManualTransportActive) },
             )
 
             Spacer(modifier = Modifier.height(32.dp))
@@ -394,10 +399,13 @@ internal fun ProfileCarousel(
 @Composable
 private fun DashboardControlPanel(
     dayState: DayState,
+    isAutoTransportEnabled: Boolean,
+    isManualTransportActive: Boolean,
     onStartDayAndTrack: () -> Unit,
     onEndDay: () -> Unit,
     onStartTrack: () -> Unit,
     onStopTrack: () -> Unit,
+    onToggleManualTransport: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -416,6 +424,15 @@ private fun DashboardControlPanel(
                 }
             }
             DayState.RECORDING -> {
+                if (!isAutoTransportEnabled) {
+                    FabActionButton(
+                        icon = Icons.Filled.DirectionsCar,
+                        color = if (isManualTransportActive) Color(0xFF43A047) else Color.Gray,
+                        contentDescription = if (isManualTransportActive) androidx.compose.ui.res.stringResource(com.figago.R.string.dashboard_manual_transport_stop) else androidx.compose.ui.res.stringResource(com.figago.R.string.dashboard_manual_transport_start),
+                        onClick = onToggleManualTransport
+                    )
+                }
+                
                 // Круглая кнопка "Пауза"
                 FabActionButton(
                     icon = Icons.Filled.Pause,
@@ -493,31 +510,20 @@ private fun generateLedColor(index: Int, maxCount: Int): Color {
     }
 }
 
-/**
- * Адаптивные размеры LED в зависимости от количества лампочек.
- */
-private fun getLedSizes(maxCount: Int): Triple<Float, Float, Float> = when {
-    maxCount <= 6  -> Triple(40f, 32f, 12f) // active, inactive, spacing
-    maxCount <= 8  -> Triple(28f, 22f, 6f)
-    else           -> Triple(22f, 18f, 4f)
-}
-
 @Composable
 private fun InteractiveLedIndicators(
     ledCount: Int,
     maxCount: Int,
     onLedClick: (Int) -> Unit,
 ) {
-    val (activeSize, inactiveSize, spacing) = getLedSizes(maxCount)
-
     Row(
-        horizontalArrangement = Arrangement.Center,
+        horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
     ) {
-
         for (i in 1..maxCount) {
-
             val isActive = i <= ledCount
 
             val color by animateColorAsState(
@@ -530,22 +536,25 @@ private fun InteractiveLedIndicators(
                 label = "ledColor$i",
             )
 
-            val size by animateFloatAsState(
-                targetValue = if (isActive) activeSize else inactiveSize,
-                animationSpec = tween(durationMillis = 300, delayMillis = (i - 1) * 80),
-                label = "ledSize$i",
-            )
-
             Box(
                 modifier = Modifier
-                    .size(size.dp)
+                    .weight(1f)
+                    .aspectRatio(1f)
                     .clip(RoundedCornerShape(6.dp))
                     .background(color)
                     .clickable { onLedClick(i) },
-            )
-
-            if (i < maxCount) {
-                Spacer(modifier = Modifier.width(spacing.dp))
+                contentAlignment = Alignment.Center
+            ) {
+                // Используем BoxWithConstraints для правильного размера текста
+                androidx.compose.foundation.layout.BoxWithConstraints {
+                    val fontSize = (maxWidth.value * 0.45f).sp
+                    Text(
+                        text = i.toString(),
+                        color = if (isActive) Color.White else Color.White.copy(alpha = 0.5f),
+                        fontSize = fontSize,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }

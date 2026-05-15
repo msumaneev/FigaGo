@@ -17,3 +17,15 @@ The system SHALL NOT include distance traveled in Transport mode towards the dai
 #### Scenario: Excluding transport from mileage
 - **WHEN** moving in Transport mode
 - **THEN** the daily wheelchair mileage and battery prognosis remaining distance do not change
+
+### Requirement: Manual Transport Overriding
+Система трекинга SHALL позволять вручную переопределять флаг `isTransport` для новых точек трека.
+
+#### Scenario: Manual transport mode is active
+- **WHEN** активирован ручной режим `isManualTransportActive = true`
+- **THEN** любые новые `TrackPoint`, сохраняемые в базу, помечаются как `isTransport = true`
+- **AND** логика автоматического определения полностью игнорируется (даже если скорость низкая)
+
+#### Scenario: Manual transport mode is deactivated
+- **WHEN** ручной режим деактивирован (`isManualTransportActive = false`)
+- **THEN** новые точки `TrackPoint` получают флаг `isTransport` согласно обычной логике (обычно `false` если авто-определение отключено)

@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">仪表盘</string>
   <string name="nav_history">历史</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">结束</string>
   <string name="dashboard_resume">继续</string>
   <string name="carousel_add">添加</string>
+  <string name="dashboard_manual_transport_start">在交通工具上</string>
+  <string name="dashboard_manual_transport_stop">离开交通工具</string>
   <string name="dashboard_mileage">里程</string>
   <string name="dashboard_time_elapsed">行程时间</string>
   <string name="dashboard_avg_speed">平均速度</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- 遥测 -->
+  <string name="settings_delete_profile">删除档案</string>
+  <string name="settings_auto_transport_title">检测乘车行程</string>
+  <string name="settings_auto_transport_desc">当速度超过轮椅的最高限速时，自动暂停电池计算。</string>
+  <string name="settings_voice_vibrate">命令时振动</string>
+  <string name="settings_voice_sound">声音提示</string>
   <string name="settings_contact_developer">联系开发者</string>
-  <string name="telemetry_dialog_title">导出数据</string>
-  <string name="telemetry_dialog_subtitle">选择发送给开发者用于诊断的数据</string>
-  <string name="telemetry_cat_device">设备</string>
-  <string name="telemetry_cat_device_desc">型号、Android版本、应用版本</string>
-  <string name="telemetry_cat_settings">设置</string>
-  <string name="telemetry_cat_settings_desc">轮椅配置、TTS、GPS、单位</string>
-  <string name="telemetry_cat_battery">电池</string>
-  <string name="telemetry_cat_battery_desc">LED事件和灯泡统计</string>
-  <string name="telemetry_cat_trips">行程记录</string>
-  <string name="telemetry_cat_trips_desc">会话和路段（30天）</string>
-  <string name="telemetry_cat_errors">错误日志</string>
-  <string name="telemetry_cat_errors_desc">异常和崩溃</string>
-  <string name="telemetry_cat_gps">GPS坐标</string>
-  <string name="telemetry_cat_gps_desc">路线（可能占用较大空间）</string>
-  <string name="telemetry_btn_send">发送</string>
-  <string name="lamp_number_title">灯泡 %d</string>
-  <string name="lamp_stat_fact">实际: ≈ %.1f 公里</string>
+  <string name="lamp_number_title">指示灯 %d</string>
+  <string name="lamp_stat_fact">实际: ≈ %.1f</string>
   <string name="lamp_stat_no_data">暂无数据</string>
-  <string name="dashboard_stat_warning">⚠ 统计数据与设定值差异较大，点击调整。</string>
+  <string name="dashboard_stat_warning">⚠ 统计数据与设置存在显著差异。点击进行调整。</string>
 </resources>

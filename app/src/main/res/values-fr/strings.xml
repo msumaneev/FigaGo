@@ -11,6 +11,8 @@
   <string name="dashboard_finish">Terminer</string>
   <string name="dashboard_resume">Reprendre</string>
   <string name="carousel_add">Ajouter</string>
+  <string name="dashboard_manual_transport_start">En transport</string>
+  <string name="dashboard_manual_transport_stop">Quitter transport</string>
   <string name="dashboard_mileage">Distance</string>
   <string name="dashboard_time_elapsed">Durée</string>
   <string name="dashboard_avg_speed">Vit. moy.</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- Télémétrie -->
+  <string name="settings_delete_profile">Supprimer le profil</string>
+  <string name="settings_auto_transport_title">Détecter le trajet en transport</string>
+  <string name="settings_auto_transport_desc">Mettre automatiquement en pause le calcul de la batterie lorsque la vitesse dépasse la limite du fauteuil.</string>
+  <string name="settings_voice_vibrate">Vibrer sur commande</string>
+  <string name="settings_voice_sound">Alerte sonore</string>
   <string name="settings_contact_developer">Contacter le développeur</string>
-  <string name="telemetry_dialog_title">Exporter les données</string>
-  <string name="telemetry_dialog_subtitle">Choisissez les données à envoyer au développeur pour le diagnostic</string>
-  <string name="telemetry_cat_device">Appareil</string>
-  <string name="telemetry_cat_device_desc">Modèle, version Android, version de l\'app</string>
-  <string name="telemetry_cat_settings">Paramètres</string>
-  <string name="telemetry_cat_settings_desc">Profil du fauteuil, TTS, GPS, unités</string>
-  <string name="telemetry_cat_battery">Batterie</string>
-  <string name="telemetry_cat_battery_desc">Événements LED et statistiques des lampes</string>
-  <string name="telemetry_cat_trips">Historique des trajets</string>
-  <string name="telemetry_cat_trips_desc">Sessions et segments (30 jours)</string>
-  <string name="telemetry_cat_errors">Journal des erreurs</string>
-  <string name="telemetry_cat_errors_desc">Exceptions et plantages</string>
-  <string name="telemetry_cat_gps">Coordonnées GPS</string>
-  <string name="telemetry_cat_gps_desc">Itinéraires (peut prendre beaucoup de place)</string>
-  <string name="telemetry_btn_send">Envoyer</string>
-  <string name="lamp_number_title">Lampe %d</string>
-  <string name="lamp_stat_fact">Réel : ≈ %.1f km</string>
+  <string name="lamp_number_title">LED %d</string>
+  <string name="lamp_stat_fact">Réel: ≈ %.1f</string>
   <string name="lamp_stat_no_data">Pas de données</string>
-  <string name="dashboard_stat_warning">⚠ Les statistiques diffèrent fortement des valeurs définies. Appuyez pour ajuster.</string>
+  <string name="dashboard_stat_warning">⚠ Les statistiques diffèrent considérablement des paramètres. Appuyez pour ajuster.</string>
 </resources>

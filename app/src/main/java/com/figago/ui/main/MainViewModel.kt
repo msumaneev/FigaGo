@@ -72,6 +72,8 @@ data class MainUiState(
     val sessionId: Long? = null,
     val previousSegmentsDurationSec: Long = 0L,
     val currentSegmentStartTimeMs: Long? = null,
+    val isAutoTransportEnabled: Boolean = true,
+    val isManualTransportActive: Boolean = false,
 )
 
 /**
@@ -114,19 +116,36 @@ class MainViewModel @Inject constructor(
         .flatMapLatest { session ->
             if (session == null) {
                 // День не начат
-                flowOf(MainUiState(dayState = DayState.IDLE))
+                activeProfile.flatMapLatest { profile ->
+                    flowOf(MainUiState(
+                        dayState = DayState.IDLE,
+                        ledCount = profile?.ledCount ?: RecordLedEventUseCase.MAX_LED_COUNT
+                    ))
+                }
             } else {
                 // Комбинируем данные активной сессии и отрезков трека
                 combine(
                     ledEventRepository.observeEventsByDayId(session.id),
                     sessionRepository.observeById(session.id),
                     trackRepository.observeSegmentsByDayId(session.id),
-                    _errorMessage,
-                ) { ledEvents, freshSession, segments, error ->
+                    combine(
+                        activeProfile,
+                        _errorMessage,
+                        settingsRepository.observeAutoTransportDetection(),
+                        trackingEngine.trackingState
+                    ) { profile, error, isAuto, trackState ->
+                        listOf(profile, error, isAuto, trackState.isManualTransportActive)
+                    }
+                ) { ledEvents, freshSession, segments, combinedParts ->
+                    val profile = combinedParts[0] as ProfileEntity?
+                    val error = combinedParts[1] as String?
+                    val isAutoTransportEnabled = combinedParts[2] as Boolean
+                    val isManualTransportActive = combinedParts[3] as Boolean
+
                     val activeSegment = segments.find { it.endTime == null }
                     val previousDurationSec = segments.filter { it.endTime != null }
                         .sumOf { it.endTime!! - it.startTime } / 1000
-                    buildUiState(freshSession ?: session, ledEvents, activeSegment, previousDurationSec, error)
+                    buildUiState(freshSession ?: session, profile, ledEvents, activeSegment, previousDurationSec, error, isAutoTransportEnabled, isManualTransportActive)
                 }
             }
         }
@@ -279,14 +298,17 @@ class MainViewModel @Inject constructor(
      */
     private suspend fun buildUiState(
         session: DaySession,
+        profile: ProfileEntity?,
         ledEvents: List<LedEvent>,
         activeSegment: TrackSegment?,
         previousDurationSec: Long,
         error: String?,
+        isAutoTransportEnabled: Boolean = true,
+        isManualTransportActive: Boolean = false,
     ): MainUiState {
 
         val ledCount = if (ledEvents.isEmpty()) {
-            RecordLedEventUseCase.MAX_LED_COUNT
+            profile?.ledCount ?: RecordLedEventUseCase.MAX_LED_COUNT
         } else {
             ledEvents.last().ledCountRemaining
         }
@@ -317,6 +339,8 @@ class MainViewModel @Inject constructor(
             sessionId = session.id,
             previousSegmentsDurationSec = previousDurationSec,
             currentSegmentStartTimeMs = activeSegment?.startTime,
+            isAutoTransportEnabled = isAutoTransportEnabled,
+            isManualTransportActive = isManualTransportActive,
         )
     }
 
@@ -369,6 +393,15 @@ class MainViewModel @Inject constructor(
         application.startService(intent)
     }
 
+    /** Включение/выключение принудительного режима транспорта. */
+    fun setManualTransport(isActive: Boolean) {
+        val intent = Intent(application, TrackingService::class.java).apply {
+            action = TrackingService.ACTION_SET_MANUAL_TRANSPORT
+            putExtra(TrackingService.EXTRA_IS_TRANSPORT, isActive)
+        }
+        application.startService(intent)
+    }
+
     fun switchActiveProfile(profileId: Long) {
         viewModelScope.launch {
             settingsRepository.setActiveProfileId(profileId)
@@ -395,7 +428,7 @@ class MainViewModel @Inject constructor(
             val newProfile = ProfileEntity(
                 name = name,
                 type = com.figago.data.entity.ProfileType.ELECTRIC,
-                iconId = R.drawable.ic_notification_preview,
+                iconId = R.drawable.ic_profile_man,
                 maxMileage = 10f,
                 ledCount = 5,
                 maxSpeed = 10f

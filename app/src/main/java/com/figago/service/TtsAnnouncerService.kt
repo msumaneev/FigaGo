@@ -15,6 +15,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.coroutines.launch
 
 /**
  * Сервис голосовых оповещений о пробеге и прогнозе остатка.
@@ -32,6 +33,8 @@ import javax.inject.Singleton
 class TtsAnnouncerService @Inject constructor(
     @ApplicationContext private val context: Context,
     private val settingsRepository: SettingsRepository,
+    private val sessionRepository: com.figago.domain.repository.SessionRepository,
+    private val eventLogDao: com.figago.data.dao.EventLogDao,
     private val formatMetricsUseCase: com.figago.domain.usecase.FormatMetricsUseCase,
 ) {
 
@@ -210,6 +213,24 @@ class TtsAnnouncerService @Inject constructor(
 
         engine.speak(text, TextToSpeech.QUEUE_FLUSH, null, "figago_announce")
         Log.i(TAG, "TTS: $text")
+        
+        // Логируем событие в базу
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.IO).launch {
+            try {
+                val session = sessionRepository.getActiveSession()
+                if (session != null) {
+                    eventLogDao.insert(
+                        com.figago.data.entity.EventLogEntity(
+                            dayId = session.id,
+                            eventType = "TTS_TRIGGERED",
+                            context = "{\"message\": \"$text\"}"
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Failed to log TTS event", e)
+            }
+        }
     }
 
     /**

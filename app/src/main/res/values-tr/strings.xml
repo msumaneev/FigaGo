@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">Panel</string>
   <string name="nav_history">Geçmiş</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">Bitir</string>
   <string name="dashboard_resume">Devam Et</string>
   <string name="carousel_add">Ekle</string>
+  <string name="dashboard_manual_transport_start">Araçtayım</string>
+  <string name="dashboard_manual_transport_stop">Araçtan İn</string>
   <string name="dashboard_mileage">Mesafe</string>
   <string name="dashboard_time_elapsed">Sürüş Süresi</string>
   <string name="dashboard_avg_speed">Ort. Hız</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- Telemetri -->
-  <string name="settings_contact_developer">Geliştiriciyle İletişim</string>
-  <string name="telemetry_dialog_title">Verileri Dışa Aktar</string>
-  <string name="telemetry_dialog_subtitle">Teşhis için geliştiriciye gönderilecek verileri seçin</string>
-  <string name="telemetry_cat_device">Cihaz</string>
-  <string name="telemetry_cat_device_desc">Model, Android sürümü, uygulama sürümü</string>
-  <string name="telemetry_cat_settings">Ayarlar</string>
-  <string name="telemetry_cat_settings_desc">Tekerlekli sandalye profili, TTS, GPS, birimler</string>
-  <string name="telemetry_cat_battery">Pil</string>
-  <string name="telemetry_cat_battery_desc">LED olayları ve lamba istatistikleri</string>
-  <string name="telemetry_cat_trips">Yolculuk Geçmişi</string>
-  <string name="telemetry_cat_trips_desc">Oturumlar ve bölümler (30 gün)</string>
-  <string name="telemetry_cat_errors">Hata Günlüğü</string>
-  <string name="telemetry_cat_errors_desc">İstisnalar ve çökmeler</string>
-  <string name="telemetry_cat_gps">GPS Koordinatları</string>
-  <string name="telemetry_cat_gps_desc">Rotalar (yer kaplayabilir)</string>
-  <string name="telemetry_btn_send">Gönder</string>
-  <string name="lamp_number_title">Lamba %d</string>
-  <string name="lamp_stat_fact">Gerçek: ≈ %.1f km</string>
+  <string name="settings_delete_profile">Profili Sil</string>
+  <string name="settings_auto_transport_title">Araç Yolculuğunu Algıla</string>
+  <string name="settings_auto_transport_desc">Hız, tekerlekli sandalyenin maksimum hızını aştığında batarya hesaplamasını otomatik olarak duraklat.</string>
+  <string name="settings_voice_vibrate">Komutta Titreşim</string>
+  <string name="settings_voice_sound">Sesli Uyarı</string>
+  <string name="settings_contact_developer">Geliştirici ile İletişime Geç</string>
+  <string name="lamp_number_title">LED %d</string>
+  <string name="lamp_stat_fact">Gerçek: ≈ %.1f</string>
   <string name="lamp_stat_no_data">Veri yok</string>
-  <string name="dashboard_stat_warning">⚠ İstatistikler ayarlanan değerlerden çok farklı. Ayarlamak için dokunun.</string>
+  <string name="dashboard_stat_warning">⚠ İstatistikler ayarlardan önemli ölçüde farklı. Ayarlamak için dokunun.</string>
 </resources>

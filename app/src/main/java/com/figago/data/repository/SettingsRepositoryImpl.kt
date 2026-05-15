@@ -185,6 +185,12 @@ class SettingsRepositoryImpl @Inject constructor(
         dataStore.edit { prefs -> prefs[profileString(id, "tts_announce_mode")] = mode }
     }
 
+    override fun observeTtsDistanceIntervalKm(): Flow<Double> {
+        return pidFlow().flatMapLatest { id ->
+            dataStore.data.map { prefs -> prefs[profileDouble(id, "tts_distance_interval_km")] ?: 1.0 }
+        }
+    }
+
     override suspend fun getTtsDistanceIntervalKm(): Double {
         val id = pid()
         return dataStore.data.first()[profileDouble(id, "tts_distance_interval_km")] ?: 1.0
@@ -193,6 +199,12 @@ class SettingsRepositoryImpl @Inject constructor(
     override suspend fun setTtsDistanceIntervalKm(km: Double) {
         val id = pid()
         dataStore.edit { prefs -> prefs[profileDouble(id, "tts_distance_interval_km")] = km }
+    }
+
+    override fun observeTtsTimeIntervalMin(): Flow<Int> {
+        return pidFlow().flatMapLatest { id ->
+            dataStore.data.map { prefs -> prefs[profileInt(id, "tts_time_interval_min")] ?: 15 }
+        }
     }
 
     override suspend fun getTtsTimeIntervalMin(): Int {

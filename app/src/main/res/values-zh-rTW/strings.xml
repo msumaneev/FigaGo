@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">儀表板</string>
   <string name="nav_history">歷史</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">結束</string>
   <string name="dashboard_resume">繼續</string>
   <string name="carousel_add">新增</string>
+  <string name="dashboard_manual_transport_start">在交通工具上</string>
+  <string name="dashboard_manual_transport_stop">離開交通工具</string>
   <string name="dashboard_mileage">里程</string>
   <string name="dashboard_time_elapsed">行程時間</string>
   <string name="dashboard_avg_speed">平均速度</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- 遙測 -->
-  <string name="settings_contact_developer">聯絡開發者</string>
-  <string name="telemetry_dialog_title">匯出資料</string>
-  <string name="telemetry_dialog_subtitle">選擇要發送給開發者進行診斷的資料</string>
-  <string name="telemetry_cat_device">裝置</string>
-  <string name="telemetry_cat_device_desc">型號、Android版本、應用程式版本</string>
-  <string name="telemetry_cat_settings">設定</string>
-  <string name="telemetry_cat_settings_desc">輪椅設定檔、TTS、GPS、單位</string>
-  <string name="telemetry_cat_battery">電池</string>
-  <string name="telemetry_cat_battery_desc">LED事件和燈泡統計</string>
-  <string name="telemetry_cat_trips">行程記錄</string>
-  <string name="telemetry_cat_trips_desc">工作階段和路段（30天）</string>
-  <string name="telemetry_cat_errors">錯誤記錄</string>
-  <string name="telemetry_cat_errors_desc">例外和當機</string>
-  <string name="telemetry_cat_gps">GPS座標</string>
-  <string name="telemetry_cat_gps_desc">路線（可能佔用較大空間）</string>
-  <string name="telemetry_btn_send">傳送</string>
-  <string name="lamp_number_title">燈泡 %d</string>
-  <string name="lamp_stat_fact">實際: ≈ %.1f 公里</string>
-  <string name="lamp_stat_no_data">無資料</string>
-  <string name="dashboard_stat_warning">⚠ 統計資料與設定值差異較大，點擊調整。</string>
+  <string name="settings_delete_profile">刪除檔案</string>
+  <string name="settings_auto_transport_title">偵測乘車行程</string>
+  <string name="settings_auto_transport_desc">當速度超過輪椅的最高速限時，自動暫停電池計算。</string>
+  <string name="settings_voice_vibrate">命令時震動</string>
+  <string name="settings_voice_sound">聲音提示</string>
+  <string name="settings_contact_developer">聯繫開發者</string>
+  <string name="lamp_number_title">指示燈 %d</string>
+  <string name="lamp_stat_fact">實際: ≈ %.1f</string>
+  <string name="lamp_stat_no_data">暫無數據</string>
+  <string name="dashboard_stat_warning">⚠ 統計數據與設定存在顯著差異。點擊進行調整。</string>
 </resources>

@@ -1,4 +1,4 @@
-﻿<?xml version='1.0' encoding='utf-8'?>
+<?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="nav_dashboard">Dashboard</string>
   <string name="nav_history">History</string>
@@ -11,6 +11,8 @@
   <string name="dashboard_finish">Stop/Finish</string>
   <string name="dashboard_resume">Resume</string>
   <string name="carousel_add">Add</string>
+  <string name="dashboard_manual_transport_start">In Transport</string>
+  <string name="dashboard_manual_transport_stop">Leave Transport</string>
   <string name="dashboard_mileage">Mileage</string>
   <string name="dashboard_time_elapsed">Trip Time</string>
   <string name="dashboard_avg_speed">Avg Speed</string>
@@ -148,26 +150,14 @@
   <string name="lang_ar">العربية</string>
   <string name="lang_ka">ქართული</string>
   <string name="lang_uk">Українська</string>
-
-  <!-- Telemetry -->
+  <string name="settings_delete_profile">Delete Profile</string>
+  <string name="settings_auto_transport_title">Detect Transport Ride</string>
+  <string name="settings_auto_transport_desc">Automatically pause battery tracking when speed exceeds the wheelchair\'s max limit.</string>
+  <string name="settings_voice_vibrate">Vibrate on Command</string>
+  <string name="settings_voice_sound">Sound Alert</string>
   <string name="settings_contact_developer">Contact Developer</string>
-  <string name="telemetry_dialog_title">Export Data</string>
-  <string name="telemetry_dialog_subtitle">Choose which data to send to the developer for diagnostics</string>
-  <string name="telemetry_cat_device">Device</string>
-  <string name="telemetry_cat_device_desc">Model, Android version, app version</string>
-  <string name="telemetry_cat_settings">Settings</string>
-  <string name="telemetry_cat_settings_desc">Wheelchair profile, TTS, GPS, units</string>
-  <string name="telemetry_cat_battery">Battery</string>
-  <string name="telemetry_cat_battery_desc">LED events and lamp statistics</string>
-  <string name="telemetry_cat_trips">Trip History</string>
-  <string name="telemetry_cat_trips_desc">Sessions and track segments (30 days)</string>
-  <string name="telemetry_cat_errors">Error Log</string>
-  <string name="telemetry_cat_errors_desc">Exceptions and crashes</string>
-  <string name="telemetry_cat_gps">GPS Coordinates</string>
-  <string name="telemetry_cat_gps_desc">Routes (may take up space)</string>
-  <string name="telemetry_btn_send">Send</string>
-  <string name="lamp_number_title">Lamp %d</string>
-  <string name="lamp_stat_fact">Actual: ~ %.1f km</string>
+  <string name="lamp_number_title">LED %d</string>
+  <string name="lamp_stat_fact">Actual: ≈ %.1f</string>
   <string name="lamp_stat_no_data">No data</string>
-  <string name="dashboard_stat_warning">⚠ Statistics differ significantly from set values. Tap to adjust.</string>
+  <string name="dashboard_stat_warning">⚠ Statistics differ significantly from the settings. Tap to adjust.</string>
 </resources>

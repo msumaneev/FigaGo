@@ -19,6 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.withLock
 import javax.inject.Inject
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
@@ -258,12 +259,42 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    private val profileMutex = kotlinx.coroutines.sync.Mutex()
+
     /** Универсальное обновление параметров текущей коляски. */
     fun updateProfile(updater: (ProfileEntity) -> ProfileEntity) {
         viewModelScope.launch {
-            activeProfile.value?.let { currentProfile ->
-                val updated = updater(currentProfile)
-                profileRepository.saveProfile(updated)
+            profileMutex.withLock {
+                val profileId = settingsRepository.getActiveProfileId()
+                val currentProfile = profileRepository.getProfileById(profileId)
+                if (currentProfile != null) {
+                    val updated = updater(currentProfile)
+                    profileRepository.saveProfile(updated)
+                    
+                    // Логируем изменение пробега по паспорту
+                    if (currentProfile.maxMileage != updated.maxMileage) {
+                        com.figago.utils.TelemetryManager.logEvent(
+                            "setting_changed",
+                            mapOf(
+                                "setting_name" to "max_mileage",
+                                "old_value" to currentProfile.maxMileage,
+                                "new_value" to updated.maxMileage
+                            )
+                        )
+                    }
+                    
+                    // Логируем изменение лампочек (для отладки двусторонней связи)
+                    if (currentProfile.ledDistances != updated.ledDistances) {
+                        com.figago.utils.TelemetryManager.logEvent(
+                            "setting_changed",
+                            mapOf(
+                                "setting_name" to "led_distances",
+                                "old_value" to currentProfile.ledDistances?.joinToString(),
+                                "new_value" to updated.ledDistances?.joinToString()
+                            )
+                        )
+                    }
+                }
             }
         }
     }
