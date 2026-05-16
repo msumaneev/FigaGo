@@ -51,11 +51,13 @@
   <string name="stat_segments">Segments</string>
   <string name="stat_moving_time">Moving Time</string>
   <string name="map_snippet_led">LEDs left: %1$d</string>
+  <string name="history_segment_name">Segment %d</string>
   <string name="profile_title">Wheelchair Passport</string>
   <string name="profile_name_label">Wheelchair name</string>
+  <string name="new_wheelchair_default_name">New</string>
   <string name="profile_icon_label">Icon</string>
-  <string name="profile_type_electric">Electric</string>
-  <string name="profile_type_manual">Manual</string>
+  <string name="profile_type_electric">Battery Tracking</string>
+  <string name="profile_type_manual">Route Only</string>
   <string name="profile_section_driving">Driving Settings</string>
   <string name="profile_max_speed">Max speed</string>
   <string name="profile_max_speed_desc">Threshold for Transport mode</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">Delete Profile</string>
   <string name="settings_auto_transport_title">Detect Transport Ride</string>
-  <string name="settings_auto_transport_desc">Automatically pause battery tracking when speed exceeds the wheelchair\'s max limit.</string>
+  <string name="settings_auto_transport_desc">Automatically pause battery tracking when speed exceeds the max limit.</string>
   <string name="settings_voice_vibrate">Vibrate on Command</string>
   <string name="settings_voice_sound">Sound Alert</string>
   <string name="settings_contact_developer">Contact Developer</string>

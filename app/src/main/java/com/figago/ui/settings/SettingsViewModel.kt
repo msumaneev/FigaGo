@@ -259,6 +259,12 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    private val _isRecalculatingLamps = MutableStateFlow(false)
+    val isRecalculatingLamps: StateFlow<Boolean> = _isRecalculatingLamps.asStateFlow()
+
+    private val _isRecalculatingTotal = MutableStateFlow(false)
+    val isRecalculatingTotal: StateFlow<Boolean> = _isRecalculatingTotal.asStateFlow()
+
     private val profileMutex = kotlinx.coroutines.sync.Mutex()
 
     /** Универсальное обновление параметров текущей коляски. */
@@ -296,6 +302,43 @@ class SettingsViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    /** Пересчет лампочек при изменении общего пробега */
+    fun recalculateLamps(newTotal: Float) {
+        viewModelScope.launch {
+            _isRecalculatingLamps.value = true
+            profileMutex.withLock {
+                val profileId = settingsRepository.getActiveProfileId()
+                val currentProfile = profileRepository.getProfileById(profileId)
+                if (currentProfile != null) {
+                    val newDistances = com.figago.domain.model.BatteryWeightProfiles.calculateDistancesWithDelta(newTotal, emptyList(), currentProfile.ledCount ?: 5)
+                    profileRepository.saveProfile(currentProfile.copy(maxMileage = newTotal, ledDistances = newDistances))
+                }
+            }
+            _isRecalculatingLamps.value = false
+        }
+    }
+
+    /** Обновление одной лампочки и пересчет общего пробега */
+    fun updateLampAndTotal(index: Int, newValue: Float) {
+        viewModelScope.launch {
+            _isRecalculatingTotal.value = true
+            profileMutex.withLock {
+                val profileId = settingsRepository.getActiveProfileId()
+                val currentProfile = profileRepository.getProfileById(profileId)
+                if (currentProfile != null) {
+                    val dbDistances = currentProfile.ledDistances ?: com.figago.domain.model.BatteryWeightProfiles.calculateDistancesWithDelta(currentProfile.maxMileage ?: 20f, emptyList(), currentProfile.ledCount ?: 5)
+                    val updated = dbDistances.toMutableList()
+                    if (index < updated.size) {
+                        updated[index] = newValue
+                    }
+                    val newTotal = com.figago.domain.model.BatteryWeightProfiles.calculateTotalMileage(updated)
+                    profileRepository.saveProfile(currentProfile.copy(maxMileage = newTotal, ledDistances = updated))
+                }
+            }
+            _isRecalculatingTotal.value = false
         }
     }
 

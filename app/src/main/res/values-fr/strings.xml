@@ -51,11 +51,13 @@
   <string name="stat_segments">Segments</string>
   <string name="stat_moving_time">En mouvement</string>
   <string name="map_snippet_led">Indicateurs restants: %1$d</string>
+  <string name="history_segment_name">Segment %d</string>
   <string name="profile_title">Fiche du fauteuil</string>
   <string name="profile_name_label">Nom du fauteuil</string>
+  <string name="new_wheelchair_default_name">Nouveau</string>
   <string name="profile_icon_label">Icône</string>
-  <string name="profile_type_electric">Électrique</string>
-  <string name="profile_type_manual">Manuel</string>
+  <string name="profile_type_electric">Suivi de batterie</string>
+  <string name="profile_type_manual">Itinéraire seul</string>
   <string name="profile_section_driving">Paramètres de conduite</string>
   <string name="profile_max_speed">Vit. max.</string>
   <string name="profile_max_speed_desc">Seuil du mode Transport</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">Supprimer le profil</string>
   <string name="settings_auto_transport_title">Détecter le trajet en transport</string>
-  <string name="settings_auto_transport_desc">Mettre automatiquement en pause le calcul de la batterie lorsque la vitesse dépasse la limite du fauteuil.</string>
+  <string name="settings_auto_transport_desc">Mettre automatiquement en pause le calcul de la batterie lorsque la vitesse dépasse la limite maximale.</string>
   <string name="settings_voice_vibrate">Vibrer sur commande</string>
   <string name="settings_voice_sound">Alerte sonore</string>
   <string name="settings_contact_developer">Contacter le développeur</string>

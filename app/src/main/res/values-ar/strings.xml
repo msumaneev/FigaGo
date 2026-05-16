@@ -51,11 +51,13 @@
   <string name="stat_segments">المقاطع</string>
   <string name="stat_moving_time">وقت التحرك</string>
   <string name="map_snippet_led">المؤشرات المتبقية: %1$d</string>
+  <string name="history_segment_name">المقطع %d</string>
   <string name="profile_title">بطاقة الكرسي</string>
   <string name="profile_name_label">اسم الكرسي</string>
+  <string name="new_wheelchair_default_name">جديد</string>
   <string name="profile_icon_label">الأيقونة</string>
-  <string name="profile_type_electric">كهربائي</string>
-  <string name="profile_type_manual">يدوي</string>
+  <string name="profile_type_electric">تتبع البطارية</string>
+  <string name="profile_type_manual">طريق فقط</string>
   <string name="profile_section_driving">إعدادات القيادة</string>
   <string name="profile_max_speed">السرعة القصوى</string>
   <string name="profile_max_speed_desc">عتبة وضع النقل</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">حذف الملف الشخصي</string>
   <string name="settings_auto_transport_title">اكتشاف رحلة النقل</string>
-  <string name="settings_auto_transport_desc">إيقاف حساب البطارية مؤقتاً تلقائياً عندما تتجاوز السرعة الحد الأقصى للكرسي المتحرك.</string>
+  <string name="settings_auto_transport_desc">إيقاف حساب البطارية مؤقتاً تلقائياً عندما تتجاوز السرعة الحد الأقصى.</string>
   <string name="settings_voice_vibrate">اهتزاز عند الأمر</string>
   <string name="settings_voice_sound">تنبيه صوتي</string>
   <string name="settings_contact_developer">اتصل بالمطور</string>

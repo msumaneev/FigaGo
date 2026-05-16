@@ -51,11 +51,13 @@
   <string name="stat_segments">段數</string>
   <string name="stat_moving_time">移動時間</string>
   <string name="map_snippet_led">剩餘指示燈: %1$d</string>
+  <string name="history_segment_name">分段 %d</string>
   <string name="profile_title">輪椅檔案</string>
   <string name="profile_name_label">輪椅名稱</string>
+  <string name="new_wheelchair_default_name">新</string>
   <string name="profile_icon_label">圖示</string>
-  <string name="profile_type_electric">電動</string>
-  <string name="profile_type_manual">手動</string>
+  <string name="profile_type_electric">電池追蹤</string>
+  <string name="profile_type_manual">僅路線</string>
   <string name="profile_section_driving">行駛設定</string>
   <string name="profile_max_speed">最高速度</string>
   <string name="profile_max_speed_desc">交通模式切換閾值</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">刪除檔案</string>
   <string name="settings_auto_transport_title">偵測乘車行程</string>
-  <string name="settings_auto_transport_desc">當速度超過輪椅的最高速限時，自動暫停電池計算。</string>
+  <string name="settings_auto_transport_desc">當速度超過最高速限時，自動暫停電池計算。</string>
   <string name="settings_voice_vibrate">命令時震動</string>
   <string name="settings_voice_sound">聲音提示</string>
   <string name="settings_contact_developer">聯繫開發者</string>

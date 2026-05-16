@@ -33,6 +33,7 @@ import com.figago.domain.model.LedEvent
 data class TrackPolylineData(
     val points: List<LatLng>,
     val color: Color = Color(0xFFFF9800),
+    val segmentId: Long? = null,
 )
 
 /**
@@ -67,6 +68,7 @@ fun TrackMap(
     polylines: List<TrackPolylineData> = emptyList(),
     ledMarkers: List<LedMarkerData> = emptyList(),
     showMyLocation: Boolean = true,
+    selectedSegmentId: Long? = null,
     modifier: Modifier = Modifier,
 ) {
     // Начальная позиция камеры (Анталья по умолчанию, обновится при получении GPS)
@@ -74,16 +76,37 @@ fun TrackMap(
         position = CameraPosition.fromLatLngZoom(LatLng(36.9, 30.7), 14f)
     }
 
-    // Автоцентрирование на последней точке трека
-    val lastPoint = polylines.lastOrNull()?.points?.lastOrNull()
-
-    LaunchedEffect(lastPoint) {
-
-        if (lastPoint != null) {
-            cameraPositionState.animate(
-                CameraUpdateFactory.newLatLngZoom(lastPoint, 16f),
-                durationMs = 500,
-            )
+    // Автоцентрирование на выбранном сегменте или последней точке
+    LaunchedEffect(selectedSegmentId, polylines) {
+        if (selectedSegmentId != null) {
+            val selectedPolyline = polylines.find { it.segmentId == selectedSegmentId }
+            if (selectedPolyline != null && selectedPolyline.points.isNotEmpty()) {
+                val boundsBuilder = com.google.android.gms.maps.model.LatLngBounds.builder()
+                selectedPolyline.points.forEach { boundsBuilder.include(it) }
+                val bounds = boundsBuilder.build()
+                
+                // If it's a single point or very tight bounds, we might need a fallback, but bounds usually works.
+                try {
+                    cameraPositionState.animate(
+                        CameraUpdateFactory.newLatLngBounds(bounds, 150),
+                        durationMs = 500,
+                    )
+                } catch (e: Exception) {
+                    // Fallback to zoom if bounds are too small or view not laid out
+                    cameraPositionState.animate(
+                        CameraUpdateFactory.newLatLngZoom(selectedPolyline.points.first(), 16f),
+                        durationMs = 500,
+                    )
+                }
+            }
+        } else {
+            val lastPoint = polylines.lastOrNull()?.points?.lastOrNull()
+            if (lastPoint != null) {
+                cameraPositionState.animate(
+                    CameraUpdateFactory.newLatLngZoom(lastPoint, 16f),
+                    durationMs = 500,
+                )
+            }
         }
     }
 
@@ -115,12 +138,16 @@ fun TrackMap(
 
         // Отрисовка полилиний (отрезки пути)
         for (polyline in polylines) {
-
             if (polyline.points.size >= 2) {
+                val isSelected = selectedSegmentId == null || polyline.segmentId == selectedSegmentId
+                val polyColor = if (isSelected) polyline.color else polyline.color.copy(alpha = 0.3f)
+                val polyWidth = if (selectedSegmentId != null && polyline.segmentId == selectedSegmentId) 12f else 8f
+
                 Polyline(
                     points = polyline.points,
-                    color = polyline.color,
-                    width = 8f,
+                    color = polyColor,
+                    width = polyWidth,
+                    zIndex = if (selectedSegmentId != null && polyline.segmentId == selectedSegmentId) 1f else 0f,
                 )
             }
         }

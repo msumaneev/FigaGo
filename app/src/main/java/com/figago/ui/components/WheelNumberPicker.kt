@@ -31,6 +31,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.draw.alpha
 
 @Composable
 fun LabeledSettingRow(
@@ -103,6 +105,7 @@ fun WheelNumberPickerSetting(
     descriptionColor: Color? = null,
     titleIcon: (@Composable () -> Unit)? = null,
     actionIcon: (@Composable () -> Unit)? = null,
+    isLoading: Boolean = false,
 ) {
     LabeledSettingRow(title, description, accentColor, descriptionColor, titleIcon, actionIcon) {
         WheelNumberPickerCore(
@@ -110,6 +113,7 @@ fun WheelNumberPickerSetting(
             range = range,
             onValueChange = onValueChange,
             accentColor = accentColor,
+            isLoading = isLoading,
         )
             
         if (suffix.isNotEmpty()) {
@@ -126,6 +130,7 @@ fun WheelNumberPickerCore(
     range: IntRange,
     onValueChange: (Int) -> Unit,
     accentColor: Color? = null,
+    isLoading: Boolean = false,
     format: (Int) -> String = { it.toString() }
 ) {
     val itemHeight = 36.dp
@@ -166,16 +171,20 @@ fun WheelNumberPickerCore(
             }
     }
 
+    val blurModifier = if (isLoading) Modifier.blur(4.dp).alpha(0.5f) else Modifier
+
     Box(
         modifier = Modifier
             .width(50.dp)
-            .height(itemHeight * 3),
+            .height(itemHeight * 3)
+            .then(blurModifier),
         contentAlignment = Alignment.Center
     ) {
         LazyColumn(
             state = listState,
             flingBehavior = flingBehavior,
             modifier = Modifier.fillMaxSize(),
+            userScrollEnabled = !isLoading,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item { Spacer(modifier = Modifier.height(itemHeight)) }

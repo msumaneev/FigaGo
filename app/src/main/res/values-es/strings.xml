@@ -51,11 +51,13 @@
   <string name="stat_segments">Segmentos</string>
   <string name="stat_moving_time">En movimiento</string>
   <string name="map_snippet_led">Indicadores restantes: %1$d</string>
+  <string name="history_segment_name">Segmento %d</string>
   <string name="profile_title">Ficha de la silla</string>
   <string name="profile_name_label">Nombre de la silla</string>
+  <string name="new_wheelchair_default_name">Nuevo</string>
   <string name="profile_icon_label">Icono</string>
-  <string name="profile_type_electric">Eléctrica</string>
-  <string name="profile_type_manual">Manual</string>
+  <string name="profile_type_electric">Rastreo de batería</string>
+  <string name="profile_type_manual">Solo ruta</string>
   <string name="profile_section_driving">Ajustes de conducción</string>
   <string name="profile_max_speed">Vel. máx.</string>
   <string name="profile_max_speed_desc">Umbral para activar modo Transporte</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">Eliminar Perfil</string>
   <string name="settings_auto_transport_title">Detectar viaje en transporte</string>
-  <string name="settings_auto_transport_desc">Pausar automáticamente el cálculo de la batería cuando la velocidad supere el límite máximo de la silla.</string>
+  <string name="settings_auto_transport_desc">Pausar automáticamente el cálculo de la batería cuando la velocidad supere el límite máximo.</string>
   <string name="settings_voice_vibrate">Vibrar al comando</string>
   <string name="settings_voice_sound">Señal de sonido</string>
   <string name="settings_contact_developer">Contactar al desarrollador</string>

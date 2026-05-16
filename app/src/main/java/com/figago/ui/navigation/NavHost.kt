@@ -144,6 +144,7 @@ fun FigaGoNavHost(startDestination: String = Routes.DASHBOARD) {
         // Состояние для диалога смены профиля
         var showSwitchDialog by remember { mutableStateOf(false) }
         var pendingSwitchProfileId by remember { mutableLongStateOf(0L) }
+        var pendingNewProfile by remember { mutableStateOf(false) }
 
         val profiles by mainViewModel.profiles.collectAsStateWithLifecycle()
         val trackingState by mainViewModel.trackingState.collectAsStateWithLifecycle()
@@ -170,13 +171,14 @@ fun FigaGoNavHost(startDestination: String = Routes.DASHBOARD) {
                         if (dayState.dayState == com.figago.ui.main.DayState.RECORDING ||
                             dayState.dayState == com.figago.ui.main.DayState.PAUSED) {
                             pendingSwitchProfileId = profileId
+                            pendingNewProfile = false
                             showSwitchDialog = true
                         } else {
                             mainViewModel.switchActiveProfile(profileId)
                         }
                     },
                     onAddProfileClick = {
-                        mainViewModel.createAndSwitchProfile {
+                        val navigateToSettings = {
                             navController.navigate(Routes.SETTINGS) {
                                 popUpTo(navController.graph.findStartDestination().id) {
                                     saveState = true
@@ -184,6 +186,13 @@ fun FigaGoNavHost(startDestination: String = Routes.DASHBOARD) {
                                 launchSingleTop = true
                                 restoreState = true
                             }
+                        }
+                        if (dayState.dayState == com.figago.ui.main.DayState.RECORDING ||
+                            dayState.dayState == com.figago.ui.main.DayState.PAUSED) {
+                            pendingNewProfile = true
+                            showSwitchDialog = true
+                        } else {
+                            mainViewModel.createAndSwitchProfile { navigateToSettings() }
                         }
                     },
                     // Клик на активную плитку — переходим в настройки
@@ -305,14 +314,28 @@ fun FigaGoNavHost(startDestination: String = Routes.DASHBOARD) {
                     androidx.compose.material3.TextButton(onClick = {
                         showSwitchDialog = false
                         mainViewModel.stopTrack()
-                        mainViewModel.switchActiveProfile(pendingSwitchProfileId)
-                        mainViewModel.startTrack()
+                        if (pendingNewProfile) {
+                            mainViewModel.createAndSwitchProfile {
+                                navController.navigate(Routes.SETTINGS) {
+                                    popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
+                            pendingNewProfile = false
+                        } else {
+                            mainViewModel.switchActiveProfile(pendingSwitchProfileId)
+                            mainViewModel.startTrack()
+                        }
                     }) {
                         Text(stringResource(R.string.dialog_switch_confirm))
                     }
                 },
                 dismissButton = {
-                    androidx.compose.material3.TextButton(onClick = { showSwitchDialog = false }) {
+                    androidx.compose.material3.TextButton(onClick = { 
+                        showSwitchDialog = false 
+                        pendingNewProfile = false
+                    }) {
                         Text(stringResource(R.string.dialog_cancel))
                     }
                 }

@@ -324,7 +324,7 @@ class SettingsRepositoryImpl @Inject constructor(
             autoPauseSpeedLimitKmH = prefs[profileInt(id, "auto_pause_speed_limit_kmh")] ?: 15,
             pointOfNoReturnWarningKm = prefs[profileInt(id, "point_of_no_return_warning_km")] ?: 2,
             appLanguageCode = prefs[profileString(id, "app_language_code")] ?: "",
-            autoTransportDetectionEnabled = prefs[profileBool(id, "auto_transport_detection")] ?: true,
+            autoTransportDetectionEnabled = prefs[profileBool(id, "auto_transport_detection")] ?: false,
         )
     }
 }

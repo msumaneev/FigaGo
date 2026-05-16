@@ -51,11 +51,13 @@
   <string name="stat_segments">Abschnitte</string>
   <string name="stat_moving_time">Fahrzeit</string>
   <string name="map_snippet_led">Verbleibende LEDs: %1$d</string>
+  <string name="history_segment_name">Abschnitt %d</string>
   <string name="profile_title">Rollstuhl-Pass</string>
   <string name="profile_name_label">Rollstuhlname</string>
+  <string name="new_wheelchair_default_name">Neu</string>
   <string name="profile_icon_label">Symbol</string>
-  <string name="profile_type_electric">Elektrisch</string>
-  <string name="profile_type_manual">Manuell</string>
+  <string name="profile_type_electric">Batterie-Tracking</string>
+  <string name="profile_type_manual">Nur Route</string>
   <string name="profile_section_driving">Fahreinstellungen</string>
   <string name="profile_max_speed">Max. Tempo</string>
   <string name="profile_max_speed_desc">Schwelle für Transportmodus</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">Profil löschen</string>
   <string name="settings_auto_transport_title">Fahrt im Transportmittel erkennen</string>
-  <string name="settings_auto_transport_desc">Akkuberechnung automatisch pausieren, wenn die Geschwindigkeit das Limit des Rollstuhls überschreitet.</string>
+  <string name="settings_auto_transport_desc">Akkuberechnung automatisch pausieren, wenn die Geschwindigkeit das Limit überschreitet.</string>
   <string name="settings_voice_vibrate">Vibration bei Befehl</string>
   <string name="settings_voice_sound">Tonsignal</string>
   <string name="settings_contact_developer">Entwickler kontaktieren</string>

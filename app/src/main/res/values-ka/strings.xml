@@ -51,11 +51,13 @@
   <string name="stat_segments">სეგმენტები</string>
   <string name="stat_moving_time">მოძრაობის დრო</string>
   <string name="map_snippet_led">დარჩენილი ინდიკატორები: %1$d</string>
+  <string name="history_segment_name">სეგმენტი %d</string>
   <string name="profile_title">ეტლის პასპორტი</string>
   <string name="profile_name_label">ეტლის სახელი</string>
+  <string name="new_wheelchair_default_name">ახალი</string>
   <string name="profile_icon_label">ხატი</string>
-  <string name="profile_type_electric">ელექტრო</string>
-  <string name="profile_type_manual">მექანიკური</string>
+  <string name="profile_type_electric">ბატარეის თვალყურის დევნება</string>
+  <string name="profile_type_manual">მხოლოდ მარშრუტი</string>
   <string name="profile_section_driving">სავალი პარამეტრები</string>
   <string name="profile_max_speed">მაქს. სიჩქარე</string>
   <string name="profile_max_speed_desc">ტრანსპორტის რეჟიმის ზღვარი</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">პროფილის წაშლა</string>
   <string name="settings_auto_transport_title">ტრანსპორტით მგზავრობის ამოცნობა</string>
-  <string name="settings_auto_transport_desc">ავტომატურად შეაჩერე ბატარეის გაანგარიშება, როცა სიჩქარე ეტლის მაქსიმუმს გადააჭარბებს.</string>
+  <string name="settings_auto_transport_desc">ავტომატურად შეაჩერე ბატარეის გაანგარიშება, როცა სიჩქარე მაქსიმუმს გადააჭარბებს.</string>
   <string name="settings_voice_vibrate">ვიბრაცია ბრძანებისას</string>
   <string name="settings_voice_sound">ხმოვანი სიგნალი</string>
   <string name="settings_contact_developer">დეველოპერთან დაკავშირება</string>

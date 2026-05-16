@@ -51,11 +51,13 @@
   <string name="stat_segments">Bölümler</string>
   <string name="stat_moving_time">Hareket Süresi</string>
   <string name="map_snippet_led">Kalan gösterge: %1$d</string>
+  <string name="history_segment_name">Bölüm %d</string>
   <string name="profile_title">Tekerlekli Sandalye Kimliği</string>
   <string name="profile_name_label">Sandalye adı</string>
+  <string name="new_wheelchair_default_name">Yeni</string>
   <string name="profile_icon_label">Simge</string>
-  <string name="profile_type_electric">Elektrikli</string>
-  <string name="profile_type_manual">Manuel</string>
+  <string name="profile_type_electric">Batarya İzleme</string>
+  <string name="profile_type_manual">Sadece Rota</string>
   <string name="profile_section_driving">Sürüş Ayarları</string>
   <string name="profile_max_speed">Maks. hız</string>
   <string name="profile_max_speed_desc">Ulaşım moduna geçiş eşiği</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">Profili Sil</string>
   <string name="settings_auto_transport_title">Araç Yolculuğunu Algıla</string>
-  <string name="settings_auto_transport_desc">Hız, tekerlekli sandalyenin maksimum hızını aştığında batarya hesaplamasını otomatik olarak duraklat.</string>
+  <string name="settings_auto_transport_desc">Hız, maksimum limiti aştığında batarya hesaplamasını otomatik olarak duraklat.</string>
   <string name="settings_voice_vibrate">Komutta Titreşim</string>
   <string name="settings_voice_sound">Sesli Uyarı</string>
   <string name="settings_contact_developer">Geliştirici ile İletişime Geç</string>

@@ -20,8 +20,8 @@ android {
         applicationId = "com.figago"
         minSdk = 26
         targetSdk = 35
-        versionCode = 33
-        versionName = "1.4.20"
+        versionCode = 38
+        versionName = "2.1.2"
     }
 
     val keystorePropertiesFile = rootProject.file("local.properties")

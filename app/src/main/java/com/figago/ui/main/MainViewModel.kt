@@ -428,8 +428,8 @@ class MainViewModel @Inject constructor(
             val newProfile = ProfileEntity(
                 name = name,
                 type = com.figago.data.entity.ProfileType.ELECTRIC,
-                iconId = R.drawable.ic_profile_man,
-                maxMileage = 10f,
+                iconId = R.drawable.ic_wheelchair_optimus,
+                maxMileage = 25f,
                 ledCount = 5,
                 maxSpeed = 10f
             )

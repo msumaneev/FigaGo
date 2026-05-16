@@ -51,11 +51,13 @@
   <string name="stat_segments">구간</string>
   <string name="stat_moving_time">이동시간</string>
   <string name="map_snippet_led">남은 표시등: %1$d</string>
+  <string name="history_segment_name">구간 %d</string>
   <string name="profile_title">휠체어 프로필</string>
   <string name="profile_name_label">휠체어 이름</string>
+  <string name="new_wheelchair_default_name">새로운</string>
   <string name="profile_icon_label">아이콘</string>
-  <string name="profile_type_electric">전동</string>
-  <string name="profile_type_manual">수동</string>
+  <string name="profile_type_electric">배터리 추적</string>
+  <string name="profile_type_manual">경로만</string>
   <string name="profile_section_driving">주행 설정</string>
   <string name="profile_max_speed">최대속도</string>
   <string name="profile_max_speed_desc">교통수단 모드 전환 기준</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">프로필 삭제</string>
   <string name="settings_auto_transport_title">교통수단 이용 감지</string>
-  <string name="settings_auto_transport_desc">속도가 휠체어 최대 속도를 초과하면 배터리 계산을 자동으로 일시 중지합니다.</string>
+  <string name="settings_auto_transport_desc">속도가 최대 속도를 초과하면 배터리 계산을 자동으로 일시 중지합니다.</string>
   <string name="settings_voice_vibrate">명령 시 진동</string>
   <string name="settings_voice_sound">소리 알림</string>
   <string name="settings_contact_developer">개발자에게 문의</string>

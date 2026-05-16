@@ -51,11 +51,13 @@
   <string name="stat_segments">Відрізків</string>
   <string name="stat_moving_time">У русі</string>
   <string name="map_snippet_led">Залишилось індикаторів: %1$d</string>
+  <string name="history_segment_name">Сегмент %d</string>
   <string name="profile_title">Паспорт візка</string>
   <string name="profile_name_label">Назва візка</string>
+  <string name="new_wheelchair_default_name">Новий</string>
   <string name="profile_icon_label">Іконка</string>
-  <string name="profile_type_electric">Електричний</string>
-  <string name="profile_type_manual">Ручний</string>
+  <string name="profile_type_electric">Трекінг батареї</string>
+  <string name="profile_type_manual">Тільки маршрут</string>
   <string name="profile_section_driving">Ходові характеристики</string>
   <string name="profile_max_speed">Макс. швидк.</string>
   <string name="profile_max_speed_desc">Поріг для режиму Транспорт</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">Видалити профіль</string>
   <string name="settings_auto_transport_title">Визначати поїздку в транспорті</string>
-  <string name="settings_auto_transport_desc">Автоматично призупиняти розрахунок заряду батареї при перевищенні максимальної швидкості візка.</string>
+  <string name="settings_auto_transport_desc">Автоматично призупиняти розрахунок заряду батареї при перевищенні максимальної швидкості.</string>
   <string name="settings_voice_vibrate">Вібрація при команді</string>
   <string name="settings_voice_sound">Звуковий сигнал</string>
   <string name="settings_contact_developer">Звернутися до розробника</string>

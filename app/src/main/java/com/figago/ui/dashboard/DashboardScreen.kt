@@ -336,7 +336,19 @@ internal fun ProfileCarousel(
     onEditProfileClick: (Long) -> Unit,
     onAddProfileClick: () -> Unit
 ) {
+    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
+
+    LaunchedEffect(activeProfileId, profiles) {
+        if (activeProfileId != null) {
+            val index = profiles.indexOfFirst { it.id == activeProfileId }
+            if (index != -1) {
+                listState.animateScrollToItem(index)
+            }
+        }
+    }
+
     LazyRow(
+        state = listState,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp)
     ) {

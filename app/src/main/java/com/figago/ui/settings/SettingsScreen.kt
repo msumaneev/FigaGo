@@ -63,6 +63,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.TextButton
@@ -99,6 +100,8 @@ fun SettingsScreen(
     val activeProfile by viewModel.activeProfile.collectAsStateWithLifecycle()
     val sessionCount by viewModel.activeProfileSessionCount.collectAsStateWithLifecycle()
     val profiles by mainViewModel.profiles.collectAsStateWithLifecycle()
+    val isRecalculatingLamps by viewModel.isRecalculatingLamps.collectAsStateWithLifecycle()
+    val isRecalculatingTotal by viewModel.isRecalculatingTotal.collectAsStateWithLifecycle()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -125,22 +128,21 @@ fun SettingsScreen(
                         R.drawable.ic_profile_man to stringResource(R.string.profile_icon_man),
                         R.drawable.ic_profile_biker to stringResource(R.string.profile_icon_biker),
                         R.drawable.ic_profile_scooter to stringResource(R.string.profile_icon_scooter),
-                        R.drawable.ic_wheelchair_permobil_f to "Permobil F",
-                        R.drawable.ic_wheelchair_permobil_m to "Permobil M",
+                        R.drawable.ic_profile_vermaren to "Vermaren",
                         R.drawable.ic_wheelchair_optimus to "Optimus",
                         R.drawable.ic_wheelchair_exotic to stringResource(R.string.profile_icon_exotic),
                         R.drawable.ic_wheelchair_manual to stringResource(R.string.profile_type_manual)
                     )
 
                     // Иконка и Название
-                    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.Bottom, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
 
                         // Компактный выбор иконки (слева)
                         var expanded by remember { mutableStateOf(false) }
                         ExposedDropdownMenuBox(
                             expanded = expanded,
                             onExpandedChange = { expanded = it },
-                            modifier = Modifier.width(80.dp)
+                            modifier = Modifier.width(90.dp)
                         ) {
                             val defaultIcon = if (activeProfile?.type == com.figago.data.entity.ProfileType.ELECTRIC) R.drawable.ic_profile_man else R.drawable.ic_wheelchair_manual
                             val currentIconId = activeProfile?.iconId ?: 0
@@ -149,7 +151,7 @@ fun SettingsScreen(
                                 value = "",
                                 onValueChange = {},
                                 readOnly = true,
-                                label = { Text(stringResource(R.string.profile_icon_label), maxLines = 1) },
+                                label = null,
                                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                                 modifier = Modifier.menuAnchor().fillMaxWidth(),
                                 leadingIcon = {
@@ -175,9 +177,19 @@ fun SettingsScreen(
                         }
 
                         // Название (занимает всё оставшееся пространство)
+                        var localName by remember(activeProfile?.id) { mutableStateOf(activeProfile?.name ?: "") }
+                        
+                        val currentProfileName = activeProfile?.name ?: ""
+                        LaunchedEffect(localName) {
+                            if (localName != currentProfileName && localName.isNotEmpty()) {
+                                kotlinx.coroutines.delay(1000)
+                                viewModel.updateProfile { it.copy(name = localName) }
+                            }
+                        }
+
                         OutlinedTextField(
-                            value = activeProfile?.name ?: "",
-                            onValueChange = { newName -> viewModel.updateProfile { it.copy(name = newName) } },
+                            value = localName,
+                            onValueChange = { localName = it },
                             label = null,
                             modifier = Modifier.weight(1f),
                             singleLine = true
@@ -272,6 +284,15 @@ fun SettingsScreen(
                         }
 
                         // 2. Пробег на одном заряде (общий)
+                        var localTotalMileage by remember(activeProfile?.id, currentMaxMileage) { mutableStateOf(currentMaxMileage.toInt()) }
+                        
+                        LaunchedEffect(localTotalMileage) {
+                            if (localTotalMileage.toFloat() != currentMaxMileage) {
+                                kotlinx.coroutines.delay(1000)
+                                viewModel.recalculateLamps(localTotalMileage.toFloat())
+                            }
+                        }
+
                         WheelNumberPickerSetting(
                             title = stringResource(R.string.profile_range_title),
                             description = if (state.unitSystem == UNIT_MILES) stringResource(R.string.profile_range_desc_mi) else stringResource(R.string.profile_range_desc_km),
@@ -290,16 +311,11 @@ fun SettingsScreen(
                                     )
                                 }
                             },
-                            value = currentMaxMileage.toInt(),
+                            value = localTotalMileage,
                             range = 5..99,
-                            onValueChange = { miles ->
-                                val newMileage = miles.toFloat()
-                                viewModel.updateProfile { dbProfile ->
-                                    val newDistances = BatteryWeightProfiles.calculateDistancesWithDelta(newMileage, emptyList(), dbProfile.ledCount ?: 5)
-                                    dbProfile.copy(maxMileage = newMileage, ledDistances = newDistances)
-                                }
-                            },
-                            suffix = batDistSuffix
+                            onValueChange = { localTotalMileage = it },
+                            suffix = batDistSuffix,
+                            isLoading = isRecalculatingTotal
                         )
 
                         // 3. Индивидуальные барабаны для каждой лампочки
@@ -336,25 +352,24 @@ fun SettingsScreen(
                                     // У нас i=0 это зеленая (последняя), i=4 это красная (первая).
                                     // Значит номер лампы: (currentLedCount - i)
                                     val lampNumber = currentLedCount - i
+                                    var localLampDist by remember(activeProfile?.id, lampDist) { mutableStateOf(lampDist.toInt()) }
+                                    
+                                    LaunchedEffect(localLampDist) {
+                                        if (localLampDist.toFloat() != lampDist) {
+                                            kotlinx.coroutines.delay(1000)
+                                            viewModel.updateLampAndTotal(i, localLampDist.toFloat())
+                                        }
+                                    }
                                     
                                     WheelNumberPickerSetting(
                                         title = String.format(stringResource(R.string.lamp_number_title), lampNumber),
                                         description = statText,
                                         descriptionColor = statColor,
-                                        value = lampDist.toInt(),
+                                        value = localLampDist,
                                         range = 1..99,
-                                        onValueChange = { newVal ->
-                                            viewModel.updateProfile { dbProfile ->
-                                                val dbDistances = dbProfile.ledDistances ?: BatteryWeightProfiles.calculateDistancesWithDelta(dbProfile.maxMileage ?: 20f, emptyList(), dbProfile.ledCount ?: 5)
-                                                val updated = dbDistances.toMutableList()
-                                                if (i < updated.size) {
-                                                    updated[i] = newVal.toFloat()
-                                                }
-                                                val newTotal = BatteryWeightProfiles.calculateTotalMileage(updated)
-                                                dbProfile.copy(maxMileage = newTotal, ledDistances = updated)
-                                            }
-                                        },
+                                        onValueChange = { localLampDist = it },
                                         suffix = batDistSuffix,
+                                        isLoading = isRecalculatingLamps,
                                         titleIcon = {
                                             // На Дашборде генерируется так: fraction = (lampNumber - 1) / (maxCount - 1)
                                             val fraction = if (currentLedCount <= 1) 1f else (lampNumber - 1).toFloat() / (currentLedCount - 1)

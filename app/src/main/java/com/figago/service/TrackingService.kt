@@ -168,6 +168,16 @@ class TrackingService : LifecycleService() {
         }
 
         lifecycleScope.launch {
+            profileRepository.getActiveProfile().collect { profile ->
+                currentProfile = profile
+                if (isRecording || activeSegmentId != null) {
+                    val session = sessionRepository.getActiveSession()
+                    updateNotification(session?.totalDistance ?: 0.0)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
             var isFirstEmission = true
             kotlinx.coroutines.flow.combine(
                 settingsRepository.observeTtsAnnounceMode(),
@@ -783,7 +793,7 @@ class TrackingService : LifecycleService() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle(getString(com.figago.R.string.notification_tracking_title))
             .setContentText(getString(com.figago.R.string.notification_tracking_text, distanceKm) + stateText)
-            .setSmallIcon(com.figago.R.drawable.ic_notification_preview)
+            .setSmallIcon(currentProfile?.iconId?.takeIf { it != 0 } ?: com.figago.R.drawable.ic_notification_preview)
             .setContentIntent(pendingIntent)
             .addAction(stopAction)
             .addAction(ledAction)

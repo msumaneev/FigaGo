@@ -51,11 +51,13 @@
   <string name="stat_segments">セグメント</string>
   <string name="stat_moving_time">走行時間</string>
   <string name="map_snippet_led">残りLED: %1$d</string>
+  <string name="history_segment_name">セグメント %d</string>
   <string name="profile_title">車いすパスポート</string>
   <string name="profile_name_label">車いすの名前</string>
+  <string name="new_wheelchair_default_name">新規</string>
   <string name="profile_icon_label">アイコン</string>
-  <string name="profile_type_electric">電動</string>
-  <string name="profile_type_manual">手動</string>
+  <string name="profile_type_electric">バッテリー追跡</string>
+  <string name="profile_type_manual">ルートのみ</string>
   <string name="profile_section_driving">走行設定</string>
   <string name="profile_max_speed">最高速度</string>
   <string name="profile_max_speed_desc">乗車モード切替のしきい値</string>
@@ -152,7 +154,7 @@
   <string name="lang_uk">Українська</string>
   <string name="settings_delete_profile">プロファイル削除</string>
   <string name="settings_auto_transport_title">乗り物移動を検出</string>
-  <string name="settings_auto_transport_desc">速度が車いすの上限を超えた場合、バッテリー計算を自動的に一時停止します。</string>
+  <string name="settings_auto_transport_desc">速度が上限を超えた場合、バッテリー計算を自動的に一時停止します。</string>
   <string name="settings_voice_vibrate">コマンド実行時に振動</string>
   <string name="settings_voice_sound">サウンドアラート</string>
   <string name="settings_contact_developer">開発者に連絡</string>

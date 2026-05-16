@@ -83,9 +83,18 @@ class HistoryViewModel @Inject constructor(
     private val _polylines = MutableStateFlow<List<com.figago.ui.components.TrackPolylineData>>(emptyList())
     val polylines: StateFlow<List<com.figago.ui.components.TrackPolylineData>> = _polylines.asStateFlow()
 
+    /** Выделенный сегмент для отображения на карте. */
+    private val _selectedSegmentId = MutableStateFlow<Long?>(null)
+    val selectedSegmentId: StateFlow<Long?> = _selectedSegmentId.asStateFlow()
+
+    fun selectSegment(segmentId: Long?) {
+        _selectedSegmentId.value = segmentId
+    }
+
     /** Загружает детали конкретного дня для экрана деталей. */
     fun loadDayStats(sessionId: Long) {
         viewModelScope.launch {
+            _selectedSegmentId.value = null
             val showAll = _showAllProfiles.value
             val primaryStats = getDayStatsUseCase(sessionId)
             
@@ -163,7 +172,8 @@ class HistoryViewModel @Inject constructor(
                                 pLines.add(
                                     com.figago.ui.components.TrackPolylineData(
                                         points = currentChunk.map { com.google.android.gms.maps.model.LatLng(it.latitude, it.longitude) },
-                                        color = if (isCurrentTransport) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color(0xFFFF9800)
+                                        color = if (isCurrentTransport) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color(0xFFFF9800),
+                                        segmentId = segment.id
                                     )
                                 )
                                 // Start new chunk, including the previous point to close the gap
@@ -178,7 +188,8 @@ class HistoryViewModel @Inject constructor(
                             pLines.add(
                                 com.figago.ui.components.TrackPolylineData(
                                     points = currentChunk.map { com.google.android.gms.maps.model.LatLng(it.latitude, it.longitude) },
-                                    color = if (isCurrentTransport) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color(0xFFFF9800)
+                                    color = if (isCurrentTransport) androidx.compose.ui.graphics.Color.Red else androidx.compose.ui.graphics.Color(0xFFFF9800),
+                                    segmentId = segment.id
                                 )
                             )
                         }

@@ -1,5 +1,6 @@
 package com.figago.ui.history
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -82,7 +85,8 @@ fun DayDetailScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(paddingValues),
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState()),
         ) {
 
             // ===== Панель статистики =====
@@ -92,7 +96,9 @@ fun DayDetailScreen(
                 StatsPanel(stats = stats)
             }
 
-            // ===== Карта (занимает оставшееся пространство) =====
+            // ===== Карта =====
+            val selectedSegmentId by viewModel.selectedSegmentId.collectAsStateWithLifecycle()
+            
             TrackMap(
                 polylines = polylines, 
                 ledMarkers = stats?.ledEvents?.mapIndexed { index, event ->
@@ -104,10 +110,66 @@ fun DayDetailScreen(
                     )
                 } ?: emptyList(),
                 showMyLocation = false,
+                selectedSegmentId = selectedSegmentId,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .weight(1f),
+                    .height(350.dp),
             )
+            
+            // ===== Список сегментов =====
+            val segments = stats?.segments ?: emptyList()
+            if (segments.size > 1) {
+                Text(
+                    text = stringResource(com.figago.R.string.stat_segments),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                )
+
+                segments.forEachIndexed { index, segment ->
+                    val isSelected = segment.id == selectedSegmentId
+                    val segmentColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface
+                    val contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface
+                    
+                    val segmentDistanceKm = segment.segmentDistance / 1000.0
+                    val title = stringResource(com.figago.R.string.history_segment_name, index + 1)
+                    val distanceText = String.format("%.2f %s", segmentDistanceKm, stringResource(com.figago.R.string.unit_km))
+
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 4.dp)
+                            .clickable {
+                                if (isSelected) viewModel.selectSegment(null) else viewModel.selectSegment(segment.id)
+                            },
+                        shape = RoundedCornerShape(12.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = segmentColor,
+                            contentColor = contentColor
+                        )
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = title,
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                            )
+                            Text(
+                                text = distanceText,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+                            )
+                        }
+                    }
+                }
+                
+                Spacer(modifier = Modifier.height(16.dp))
+            }
         }
     }
 }

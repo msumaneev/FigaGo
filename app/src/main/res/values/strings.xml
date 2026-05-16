@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
   <string name="app_name">FigaGo</string>
-  <string name="new_wheelchair_default_name">Новый профиль</string>
+  <string name="new_wheelchair_default_name">Новый</string>
   <string name="notification_channel_id">figago_tracking</string>
   <string name="notification_channel_name">Запись трека</string>
   <string name="notification_tracking_title">FigaGo — запись трека</string>
@@ -61,7 +61,7 @@
   <string name="settings_level_unit">%d уровень (км)</string>
   <string name="settings_level_critical">1 уровень (Критичный) (км)</string>
   <string name="settings_auto_transport_title">Определять поездку в транспорте</string>
-  <string name="settings_auto_transport_desc">Автоматически приостанавливать расчет заряда батареи при превышении максимальной скорости коляски.</string>
+  <string name="settings_auto_transport_desc">Автоматически приостанавливать расчет заряда батареи при превышении максимальной скорости.</string>
   <string name="settings_voice_assistant_section">Голосовой помощник</string>>
   <string name="settings_voice_setup">Настроить голосовые команды</string>
   <string name="settings_voice_home_prompt">Открываем Google Home...</string>
@@ -139,6 +139,7 @@
   <string name="stat_segments">Отрезков</string>
   <string name="stat_moving_time">В движении</string>
   <string name="map_snippet_led">Осталось индикаторов: %1$d</string>
+  <string name="history_segment_name">Сегмент %d</string>
   <string name="notif_title">Уведомление о записи GPS-трека</string>
   <string name="notif_btn_pause">Пауза</string>
   <string name="notif_btn_start">Старт</string>
@@ -158,8 +159,8 @@
   <string name="profile_save_and_exit">Сохранить и Выйти</string>
   <string name="profile_name_label"></string>
   <string name="profile_icon_label">Иконка</string>
-  <string name="profile_type_electric">Электрическая</string>
-  <string name="profile_type_manual">Ручная</string>
+  <string name="profile_type_electric">Трекинг батареи</string>
+  <string name="profile_type_manual">Только маршрут</string>
   <string name="profile_section_driving">Ходовые характеристики</string>
   <string name="profile_max_speed">Макс. скорость</string>
   <string name="profile_max_speed_desc">Порог для переключения в режим Транспорт</string>
